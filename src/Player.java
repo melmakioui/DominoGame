@@ -10,6 +10,7 @@ public class Player {
     public Player(String name){
         this.hand = new ArrayList<>();
         this.name = name;
+        this.points = 0;
     }
 
     public void addTile(Tile tile){
@@ -20,7 +21,7 @@ public class Player {
         hand.remove(tile);
     }
 
-    public void removeAllTiles(){
+    public void clearHand(){
         hand.clear();
     }
 
