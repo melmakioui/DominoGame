@@ -16,6 +16,10 @@ public class Tile {
         return rightNum;
     }
 
+    public int getSumTile(){
+        return (leftNum + rightNum);
+    }
+
     public void displayNormalTile() {
         System.out.println("  *****");
         System.out.println("  * " + leftNum + " *");

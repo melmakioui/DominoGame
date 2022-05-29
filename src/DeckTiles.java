@@ -11,6 +11,9 @@ public class DeckTiles {
         deckTiles = new ArrayList<>();
     }
 
+    public void addTile(Tile tile){
+        deckTiles.add(tile);
+    }
     public Tile getDominoTile(){
         Random random = new Random();
 
