@@ -1,6 +1,3 @@
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class Domino {
 
 
@@ -28,7 +25,7 @@ public class Domino {
         }
     }
 
-    public Tile getLargerTile(Player...player) {
+    public Tile getInitTile(Player...player) {
 
         int max = 0;
         int idx = 0;
@@ -47,6 +44,25 @@ public class Domino {
         return maxTile;
     }
 
+    //Probar metodo
+    public boolean canPlay (Player player, Board board) {
+
+        for (Tile tile: player.getHand()) {
+            if (tile.getRightNum() == board.getFirst().getLeftNum() || tile.getLeftNum() == board.getFirst().getLeftNum()
+            || tile.getRightNum() == board.getLast().getRightNum()|| tile.getLeftNum() == board.getLast().getLeftNum())
+                return true;
+        }
+        return false;
+    }
+
+
+    public boolean isValidPlay (Tile tile, Board board) {
+
+        return tile.getLeftNum() == board.getFirst().getLeftNum() ||
+        tile.getRightNum() == board.getFirst().getRightNum() ||
+        tile.getLeftNum() == board.getLast().getLeftNum() ||
+        tile.getRightNum() == board.getLast().getRightNum();
+    }
 
     public boolean isWinner(Player player){
         return player.isHandEmpty();
