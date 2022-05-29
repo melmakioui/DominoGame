@@ -29,4 +29,16 @@ public class Board {
     public List<Tile> getBoard() {
         return board;
     }
+
+    public void displayBoard(){
+        for (Tile tile: board) {
+            tile.displayTile();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "BOARD: \n" +
+                board;
+    }
 }

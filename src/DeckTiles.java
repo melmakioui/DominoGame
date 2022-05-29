@@ -17,7 +17,7 @@ public class DeckTiles {
     public Tile getDominoTile(){
         Random random = new Random();
 
-        int randomPos = random.nextInt(deckTiles.size());
+        int randomPos = random.nextInt(deckTiles.size() -1);
         Tile randomTile = deckTiles.get(randomPos);
         deckTiles.remove(randomTile);
 

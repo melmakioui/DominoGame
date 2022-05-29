@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Player {
 
@@ -9,7 +10,7 @@ public class Player {
 
     public Player(int numPlayer) {
         this.hand = new ArrayList<>();
-        this.name = ("Player " + numPlayer + 1);
+        this.name = ("Player " + numPlayer);
         this.points = 0;
     }
 
@@ -24,6 +25,10 @@ public class Player {
 
     public void removeTile(Tile tile) {
         hand.remove(tile);
+    }
+
+    public void removeTile(int idx) {
+        hand.remove(idx);
     }
 
     public void clearHand() {
@@ -57,9 +62,14 @@ public class Player {
         return this.hand;
     }
 
+    public void displayCurrentTiles(){
+        AtomicInteger num = new AtomicInteger();
+        System.out.println("Your Current Tiles " + name );
+        hand.forEach(tile -> System.out.println( num.incrementAndGet() + " - " + tile));
+    }
 
     @Override
     public String toString() {
-        return name + "Tiles --> " + hand;
+        return "> " + name + " " + hand ;
     }
 }
