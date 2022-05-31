@@ -5,7 +5,11 @@ public class test {
 
     public static void main(String[] args) {
 
-        DeckTiles deckTiles = new DeckTiles();
+        Game game = new Game();
+        //TODO IF ISVALID PLAY
+
+
+     /*   DeckTiles deckTiles = new DeckTiles();
         Board board = new Board();
         Domino d = new Domino(deckTiles);
         Player p = new Player(1);
@@ -17,7 +21,7 @@ public class test {
 
         p.displayCurrentTiles();
 
-        System.out.println(d.isValidPlay(p.getTile(4),board));
+        System.out.println(d.isValidPlay(p.getTile(4),board));*/
 
 
     }

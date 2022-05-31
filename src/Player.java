@@ -16,7 +16,9 @@ public class Player {
 
 
     public Tile getTile(int idx) {
-        return hand.get(idx);
+        Tile tile = hand.get(idx);
+        hand.remove(idx);
+        return tile;
     }
 
     public void addTile(Tile tile) {
@@ -25,10 +27,6 @@ public class Player {
 
     public void removeTile(Tile tile) {
         hand.remove(tile);
-    }
-
-    public void removeTile(int idx) {
-        hand.remove(idx);
     }
 
     public void clearHand() {
@@ -43,7 +41,6 @@ public class Player {
         this.points += points;
     }
 
-    //Nos devuelve la ficha mas alta
     public Tile getMaxTile() {
 
         int max = 0;

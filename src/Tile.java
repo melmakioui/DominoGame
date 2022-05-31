@@ -2,10 +2,12 @@ public class Tile {
 
     private int leftNum;
     private int rightNum;
+    private boolean initialTile;
 
     public Tile (int leftNum, int rightNum) {
         this.leftNum = leftNum;
         this.rightNum = rightNum;
+        this.initialTile = false;
     }
 
     public int getLeftNum() {
@@ -18,6 +20,23 @@ public class Tile {
 
     public int getSumTile(){
         return (leftNum + rightNum);
+    }
+
+    public void setInitialTile(boolean initialTile) {
+        this.initialTile = initialTile;
+    }
+
+
+    //Output
+
+    public void displayTile(){
+        if (leftNum == rightNum || initialTile) {
+            displayDoubleTile();
+            return;
+        }
+
+        displayNormalTile();
+
     }
 
     public void displayNormalTile() {

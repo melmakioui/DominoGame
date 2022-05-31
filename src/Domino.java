@@ -6,11 +6,10 @@ public class Domino {
 
     private DeckTiles deckTiles;
 
-    public Domino(DeckTiles deckTiles){
+    public Domino( ){
         this.deckTiles = new DeckTiles();
-        this.deckTiles.shuffleDeck();
         initTiles();
-
+        this.deckTiles.shuffleDeck();
     }
 
     public void initTiles(){ //rule
@@ -27,6 +26,7 @@ public class Domino {
         }
     }
 
+
     public Tile getInitTile(Player...player) {
 
         int max = 0;
@@ -40,7 +40,7 @@ public class Domino {
             }
         }
 
-        boolean firstTile = true; //para indicar que se imprima horizontal
+        boolean firstTile = true; //remove
         player[idx].getMaxTile().setInitialTile(firstTile);
 
         maxTile = player[idx].getMaxTile();
@@ -49,7 +49,7 @@ public class Domino {
         return maxTile;
     }
 
-    //Probar metodo OK
+
     public boolean canPlay (Player player, Board board) {
 
         for (Tile tile: player.getHand()) {

@@ -14,10 +14,12 @@ public class DeckTiles {
     public void addTile(Tile tile){
         deckTiles.add(tile);
     }
+
+
     public Tile getDominoTile(){
         Random random = new Random();
 
-        int randomPos = random.nextInt(deckTiles.size() -1);
+        int randomPos = random.nextInt(deckTiles.size());
         Tile randomTile = deckTiles.get(randomPos);
         deckTiles.remove(randomTile);
 
