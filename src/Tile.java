@@ -2,12 +2,10 @@ public class Tile {
 
     private int leftNum;
     private int rightNum;
-    private boolean initialTile;
 
-    public Tile (int leftNum, int rightNum) {
+    public Tile(int leftNum, int rightNum) {
         this.leftNum = leftNum;
         this.rightNum = rightNum;
-        this.initialTile = false;
     }
 
     public int getLeftNum() {
@@ -18,32 +16,31 @@ public class Tile {
         return rightNum;
     }
 
-    public int getSumTile(){
+    public int getSumTile() {
         return (leftNum + rightNum);
     }
 
-    public void setInitialTile(boolean initialTile) {
-        this.initialTile = initialTile;
+
+    public void reverseTile() {
+        int temp = leftNum;
+        leftNum = rightNum;
+        rightNum = temp;
     }
 
-
-    //Output
-
-    public void displayTile(){
-        if (leftNum == rightNum || initialTile) {
+    public void displayTile() {
+        if (leftNum == rightNum) {
             displayDoubleTile();
             return;
         }
 
         displayNormalTile();
-
     }
 
     public void displayNormalTile() {
         System.out.println("  *****");
         System.out.println("  * " + leftNum + " *");
         System.out.println("  *---*");
-        System.out.println("  * "  + rightNum + " *");
+        System.out.println("  * " + rightNum + " *");
         System.out.println("  *****");
     }
 
@@ -51,11 +48,11 @@ public class Tile {
         System.out.println("  *****");
         System.out.println("  * " + rightNum + " *");
         System.out.println("  *---*");
-        System.out.println("  * "  + leftNum + " *");
+        System.out.println("  * " + leftNum + " *");
         System.out.println("  *****");
     }
 
-    public void displayDoubleTile(){
+    public void displayDoubleTile() {
         System.out.println("*********");
         System.out.println("* " + leftNum + " | " + rightNum + " *");
         System.out.println("*********");
@@ -63,6 +60,6 @@ public class Tile {
 
     @Override
     public String toString() {
-        return "[ " + leftNum + " | " + rightNum + " ]" ;
+        return "[ " + leftNum + " | " + rightNum + " ]";
     }
 }
