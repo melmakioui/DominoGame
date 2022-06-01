@@ -1,52 +1,57 @@
+
+import Rules.Domino;
+import Game.Player;
+import Game.Board;
+import Game.DeckTiles;
+
 public class Game {
 
-    private int numPlayers;
     private Player[] players;
     private Board board;
     private Domino domino;
+    private DeckTiles deck;
 
-    //deck tiles - domino
 
     public Game() {
-        this.numPlayers = 4; // IO
-        this.players = new Player[numPlayers];
+        this.players = new Player[2];
         this.board = new Board();
         this.domino = new Domino();
+        this.deck = new DeckTiles();
 
         initPlayers();
         initGame();
     }
 
-    public void initPlayers() {
-        for (int i = 0; i < players.length; i++) {
+    private void initPlayers() {
+        for (int i = 0; i < players.length; i++)
             players[i] = new Player(i + 1);
-        }
     }
 
-    public void initGame(){
+    public void initGame() {
 
-        for (int i = 0; i < players.length ; i++) {
-            domino.drawTileFromDeck(players[i],7);
-        }
+        int turn = 0;
+        clearGameArea();
+        startGameArea();
 
-        Tile t = domino.getInitTile(players);
-        board.addLast(t);
+        do {
+            //play
+        } while (!domino.isWinner(players[turn]));
+    }
+
+    private void clearGameArea() {
+        for (Player player : players)
+            if (!player.isHandEmpty())
+                player.clearHand();
+
+        deck.clearDeck();
+        board.clearBoard();
+    }
+
+    private void startGameArea(){
+        domino.initTiles(deck);
+        domino.drawTileFromDeck(deck,players);
+        board.addLast(domino.getInitTile(players));
         board.displayBoard();
-
-
-        System.out.println(players[0]);
-        System.out.println(players[1]);
-        System.out.println(players[2]);
-        System.out.println(players[3]);
-
-        players[3].getTile(2);
-
-        System.out.println();
-        System.out.println(players[0]);
-        System.out.println(players[1]);
-        System.out.println(players[2]);
-        System.out.println(players[3]);
-
     }
 
 

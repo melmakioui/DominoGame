@@ -1,10 +1,11 @@
+package Game;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
 
     private List<Tile> board;
-
 
     public Board(){
         this.board = new ArrayList<>();
@@ -26,8 +27,8 @@ public class Board {
         return board.get( board.size() -1 );
     }
 
-    public List<Tile> getBoard() {
-        return board;
+    public void clearBoard(){
+        board.clear();
     }
 
     public void displayBoard(){

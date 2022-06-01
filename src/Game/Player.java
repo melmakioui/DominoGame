@@ -1,6 +1,7 @@
+package Game;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Player {
 
@@ -19,6 +20,7 @@ public class Player {
     }
 
     public Tile putTile(int idx) {
+        idx -= 1;
         Tile tile = hand.get(idx);
         hand.remove(idx);
         return tile;
@@ -32,40 +34,38 @@ public class Player {
         hand.remove(tile);
     }
 
-    public void clearHand() {
-        hand.clear();
-    }
-
     public boolean isHandEmpty() {
         return this.hand.isEmpty();
+    }
+
+    public void clearHand() {
+        hand.clear();
     }
 
     public void addPoints(int points) {
         this.points += points;
     }
 
+    public int getPoints(){
+        return this.points;
+    }
+
     public Tile getMaxTile() {
 
         int max = 0;
-        Tile tile = null;
 
-        for (Tile value : hand)
-            if (max < value.getSumTile()) {
-                max = value.getSumTile();
-                tile = value;
+        Tile maxTile = null;
+        for (Tile tile : hand)
+            if (max < tile.getSumTile()) {
+                max = tile.getSumTile();
+                maxTile = tile;
             }
 
-        return tile;
+        return maxTile;
     }
 
     public List<Tile> getHand() {
         return this.hand;
-    }
-
-    public void displayCurrentTiles(){
-        AtomicInteger num = new AtomicInteger();
-        System.out.println("Your Current Tiles " + name );
-        hand.forEach(tile -> System.out.println( num.incrementAndGet() + " - " + tile));
     }
 
     @Override

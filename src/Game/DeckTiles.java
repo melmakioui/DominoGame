@@ -1,3 +1,5 @@
+package Game;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,6 +17,9 @@ public class DeckTiles {
         deckTiles.add(tile);
     }
 
+    public void clearDeck(){
+        deckTiles.clear();
+    }
 
     public Tile getDominoTile(){
         Random random = new Random();
@@ -26,7 +31,7 @@ public class DeckTiles {
         return randomTile;
     }
 
-    public boolean isDeckEmpty(){
+    public boolean isEmpty(){
         return deckTiles.isEmpty();
     }
 

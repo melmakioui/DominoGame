@@ -1,3 +1,5 @@
+package Game;
+
 public class Tile {
 
     private int leftNum;
@@ -19,7 +21,6 @@ public class Tile {
     public int getSumTile() {
         return (leftNum + rightNum);
     }
-
 
     public void reverseTile() {
         int temp = leftNum;
@@ -62,4 +63,5 @@ public class Tile {
     public String toString() {
         return "[ " + leftNum + " | " + rightNum + " ]";
     }
+
 }
