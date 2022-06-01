@@ -14,8 +14,11 @@ public class Player {
         this.points = 0;
     }
 
-
     public Tile getTile(int idx) {
+        return hand.get(idx);
+    }
+
+    public Tile putTile(int idx) {
         Tile tile = hand.get(idx);
         hand.remove(idx);
         return tile;
@@ -46,12 +49,12 @@ public class Player {
         int max = 0;
         Tile tile = null;
 
-        for (Tile value : hand) {
+        for (Tile value : hand)
             if (max < value.getSumTile()) {
                 max = value.getSumTile();
                 tile = value;
             }
-        }
+
         return tile;
     }
 
