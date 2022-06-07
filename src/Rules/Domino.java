@@ -84,13 +84,6 @@ public class Domino {
 
     public void addPoints(Player player, Player... players) { //solo si es ganador
 
-        for (Player p : players) {
-                if (player.getPoints() > p.getPoints()) {
-                    int val = p.removePoints();
-                    player.addPoints(val);
-                }
-        }
-
         /**SI JUGADOR = GANA
          * SUMA PUNTOS DE ADVERSARIOS Y/O PAREJA
          * SOLO SI SUS PUNTOS ES MAYOR QUE LOS ADVERSARIOS

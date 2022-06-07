@@ -16,11 +16,11 @@ public class Player {
         this.points = 0;
     }
 
-    public Tile getTile(int idx) {
+/*    public Tile getTile(int idx) {
         return hand.get(idx);
-    }
+    }*/
 
-    public Tile putTile(int idx) {
+    public Tile getTile(int idx) {
         Tile tile = hand.get(idx);
         hand.remove(idx);
         return tile;
@@ -69,6 +69,7 @@ public class Player {
 
     @Override
     public String toString() {
-        return "> " + name + " " + hand ;
+        return  name + " -> " + hand + "\n" +
+                "Current points -> " + points;
     }
 }
