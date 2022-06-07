@@ -2,22 +2,20 @@
 import Rules.Domino;
 import Game.*;
 
-import java.util.Scanner;
-
 public class Game {
 
+    private Team team[];
     private Player[] players;
     private Board board;
     private Domino domino;
     private DeckTiles deck;
-    private boolean team;
+
 
     public Game() {
         this.players = new Player[4];
         this.board = new Board();
         this.domino = new Domino();
         this.deck = new DeckTiles();
-        this.team = false;
 
         initPlayers();
         initGame();
@@ -28,78 +26,61 @@ public class Game {
             players[i] = new Player(i + 1);
     }
 
+    private void initTeams() {
+        this.team = new Team[2];
+        for (int i = 0; i < team.length; i++) {
+            team[i] = new Team(i + 1);
+        }
+    }
+
     public void initGame() {
 
-        int turn = 0;
-
         clearGameArea();
-        turn = startGameArea();
-        playRound();
+        startGameArea();
 
+        int turn;
+        turn = domino.startPlayer(players);
+
+        Tile initialTile = players[turn].getTile(0);
+        board.addLast(initialTile);
+
+        turn++;
+        turn = turn % players.length;
+
+        boolean playTeams = false;
+        if (playTeams)
+            initTeams();
+
+
+/*
         System.out.println(turn);
         System.out.println(players[0]);
         System.out.println(players[1]);
         System.out.println(players[2]);
-        System.out.println(players[3]);
+        System.out.println(players[3]);*/
 
         do {
-
+            playRound();
         } while (!domino.isWinner(players[turn]));
     }
 
-    private void playRound(){
-        Scanner in = new Scanner(System.in);
-        int turn = 0;
-        int type = in.nextInt();
-        System.out.println("current tiles");
-        System.out.println(players[turn]);
-        Tile temp;
-        if (!domino.canPlay(players[turn],board))
-            players[turn].addTile(deck.getDominoTile());
-
-        System.out.println("sel your tile");
-        int seltile = in.nextInt();
-        int pos = in.nextInt();
-
-        if (seltile == 1) {
-            if (domino.isValidPlay(players[turn].getTile(pos), board))
-                board.addFirst(players[turn].getTile(pos));
-        }else if (seltile == 2) {
-            if (domino.isValidPlay(players[turn].getTile(pos), board))
-                board.addFirst(players[turn].getTile(pos));
-        }
-
-
-        board.displayBoard();
-
-        do{
-
-
-
-        }while (!domino.isRoundWinner(players[turn]));
-
+    private void playRound() {
 
 
     }
 
     private void clearGameArea() {
         for (Player player : players)
-            if (!player.isHandEmpty())
-                player.clearHand();
-
+            player.clearHand();
         deck.clearDeck();
         board.clearBoard();
     }
 
-    private int startGameArea(){
+    private void startGameArea() {
         domino.initTiles(deck);
-        domino.drawTileFromDeck(deck,players);
-        int idxInit = domino.startPlayer(players);
-        board.addLast(players[idxInit].putTile(0));
+        domino.drawTileFromDeck(deck, players);
         board.displayBoard();
-        return idxInit;
     }
-
 
 
 }
