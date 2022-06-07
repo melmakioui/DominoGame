@@ -1,6 +1,6 @@
 package Game;
 
-public class Tile {
+public class Tile implements Comparable<Tile> {
 
     private int leftNum;
     private int rightNum;
@@ -37,6 +37,7 @@ public class Tile {
         displayNormalTile();
     }
 
+    //Moure a un altre clase
     public void displayNormalTile() {
         System.out.println("  *****");
         System.out.println("  * " + leftNum + " *");
@@ -64,4 +65,21 @@ public class Tile {
         return "[ " + leftNum + " | " + rightNum + " ]";
     }
 
+    @Override
+    public int compareTo(Tile o) {
+        // 1,0,-1
+        //return (getSumTile() > o.getSumTile())? 1 : -1 ;
+        //reverseTile();
+        //o.reverseTile();
+        if( leftNum == o.getLeftNum() )
+            if (rightNum > o.getRightNum()) {
+                return 1;
+            } else return -1;
+
+        if (leftNum > o.getLeftNum()) {
+            return 1;
+        }
+
+        return -1;
+    }
 }

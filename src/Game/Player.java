@@ -1,6 +1,7 @@
 package Game;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Player {
@@ -20,7 +21,6 @@ public class Player {
     }
 
     public Tile putTile(int idx) {
-        idx -= 1;
         Tile tile = hand.get(idx);
         hand.remove(idx);
         return tile;
@@ -28,6 +28,7 @@ public class Player {
 
     public void addTile(Tile tile) {
         hand.add(tile);
+        hand.sort(Tile::compareTo);
     }
 
     public void removeTile(Tile tile) {
@@ -46,24 +47,22 @@ public class Player {
         this.points += points;
     }
 
+    public int removePoints() {
+        int temp = points;
+        points = 0;
+        return temp;
+    }
+
     public int getPoints(){
         return this.points;
     }
 
-    public Tile getMaxTile() {
-
-        int max = 0;
-
-        Tile maxTile = null;
-        for (Tile tile : hand)
-            if (max < tile.getSumTile()) {
-                max = tile.getSumTile();
-                maxTile = tile;
-            }
-
-        return maxTile;
+    public int getMaxTile() {
+        hand.sort(Collections.reverseOrder());
+        return hand.get(0).getSumTile();
     }
 
+    //Eliminar metode
     public List<Tile> getHand() {
         return this.hand;
     }

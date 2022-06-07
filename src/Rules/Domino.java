@@ -5,6 +5,8 @@ import Game.DeckTiles;
 import Game.Player;
 import Game.Tile;
 
+import java.util.IllegalFormatCodePointException;
+
 public class Domino {
 
     private final int MAX_POINTS = 80;
@@ -12,6 +14,10 @@ public class Domino {
     private final int MIN_PLAYERS = 2;
     private final int MAX_PLAYERS = 4;
 
+    /**EL PRIMERO EN LLEGAR A UN PUNTO DETERMINADO DE PUNTOS gana*
+     * CHILENO EL QUE LLEGUE A UN PUNTO DETERMINADO pierde LA PARTIDA
+     * LATINO
+     */
     public Domino() {
 
 
@@ -35,46 +41,55 @@ public class Domino {
             player.addTile(deckTiles.getDominoTile());
     }
 
-    public Tile getInitTile(Player... player) {
+    public int startPlayer(Player... player) {
 
         int max = 0;
         int idx = 0;
-        Tile maxTile;
 
         for (int i = 0; i < player.length; i++)
-            if (max < player[i].getMaxTile().getSumTile()) {
-                max = player[i].getMaxTile().getSumTile();
+            if (max < player[i].getMaxTile()) {
+                max = player[i].getMaxTile();
                 idx = i;
             }
 
-        player[idx].getMaxTile();
-        maxTile = player[idx].getMaxTile();
-        player[idx].removeTile(maxTile);
-        /**Indicar que jugador a sacado la ficha mas alta*/
-        return maxTile;
+        return idx;
     }
 
 
     public boolean canPlay(Player player, Board board) {
 
-        for (Tile tile : player.getHand()) {
-            if (tile.getRightNum() == board.getFirst().getLeftNum() || tile.getLeftNum() == board.getFirst().getLeftNum()
-                    || tile.getRightNum() == board.getLast().getRightNum() || tile.getLeftNum() == board.getLast().getLeftNum())
+        int firstLeftNum = board.getFirst().getLeftNum();
+        int lastRightNum = board.getLast().getRightNum();
+
+        for (Tile tile : player.getHand())
+            if (tile.getLeftNum() == lastRightNum
+               || tile.getRightNum() == firstLeftNum)
                 return true;
-        }
+
         return false;
     }
 
 
     public boolean isValidPlay(Tile tile, Board board) { //Rule
 
-        return tile.getLeftNum() == board.getFirst().getLeftNum() ||
-                tile.getRightNum() == board.getFirst().getRightNum() ||
-                tile.getLeftNum() == board.getLast().getLeftNum() ||
-                tile.getRightNum() == board.getLast().getRightNum();
+        if (tile.getLeftNum() == board.getFirst().getLeftNum()
+                || tile.getRightNum() == board.getLast().getRightNum()) {
+            tile.reverseTile();
+            return true;
+        }
+
+        return tile.getRightNum() == board.getFirst().getLeftNum()
+                || tile.getLeftNum() == board.getLast().getRightNum();
     }
 
-    public void addPoints(Player player) { //solo si es ganador
+    public void addPoints(Player player, Player... players) { //solo si es ganador
+
+        for (Player p : players) {
+                if (player.getPoints() > p.getPoints()) {
+                    int val = p.removePoints();
+                    player.addPoints(val);
+                }
+        }
 
         /**SI JUGADOR = GANA
          * SUMA PUNTOS DE ADVERSARIOS Y/O PAREJA
