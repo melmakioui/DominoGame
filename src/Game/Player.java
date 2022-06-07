@@ -21,6 +21,11 @@ public class Player {
     }*/
 
     public Tile getTile(int idx) {
+        return  hand.get(idx);
+
+    }
+
+    public Tile putTile(int idx) {
         Tile tile = hand.get(idx);
         hand.remove(idx);
         return tile;
@@ -62,9 +67,12 @@ public class Player {
         return hand.get(0).getSumTile();
     }
 
-    //Eliminar metode
     public List<Tile> getHand() {
         return this.hand;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
