@@ -21,7 +21,7 @@ public class Player {
     }*/
 
     public Tile getTile(int idx) {
-        return  hand.get(idx);
+        return hand.get(idx);
 
     }
 
