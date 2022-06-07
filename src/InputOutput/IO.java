@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class IO {
 
-    private static Scanner input;
+    private static Scanner input = new Scanner(System.in);
     private final static int MIN_MODE_OPTION = 1;
     private final static int MAX_MODE_OPTION = 3;
 
@@ -55,18 +55,23 @@ public class IO {
     public static int selectTile(int length) {
         System.out.println("SELECT ONE TILE.");
         int tileIdx = input.nextInt();
-        while (tileIdx < length || tileIdx > length) {
-            System.out.println("PLEASE YOU HAVE " + (length -1) + " TILES");
+        while (tileIdx < 0 || tileIdx > (length+1)) {
+            System.out.println("PLEASE YOU HAVE " + (length + 1) + " TILES");
             System.out.print(">");
             tileIdx = input.nextInt();
         }
         return tileIdx;
     }
 
-
-    public static void displayCantPlay(){
-        System.out.println("YOU DONT HAVE TILES FOR PLAY + 1 TILE");
+    public static int putPosition(){
+        System.out.println("WHERE DO YOU WANNA PUT THE TILE?");
+        System.out.println("1.START" + "\n" +
+                "2. END");
+        System.out.print(">");
+        int pos = input.nextInt();
+        return pos;
     }
+
 
 
 
