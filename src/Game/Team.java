@@ -9,8 +9,8 @@ public class Team {
     private List<Player> teamPlayers;
     private int points;
 
-    public Team(int numTeam) {
-        this.teamName = "Team " + numTeam;
+    public Team( ) {
+        //this.teamName = "Team " + numTeam;
         this.teamPlayers = new ArrayList<>();
         this.points = 0;
     }

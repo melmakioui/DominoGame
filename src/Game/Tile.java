@@ -28,15 +28,16 @@ public class Tile implements Comparable<Tile> {
         rightNum = temp;
     }
 
-    public void displayTile() {
+/*    public void displayTile() {
         if (leftNum == rightNum) {
             displayDoubleTile();
             return;
         }
 
         displayNormalTile();
-    }
+    }*/
 
+/*
     //Moure a un altre clase
     public void displayNormalTile() {
         System.out.println("  *****");
@@ -59,6 +60,7 @@ public class Tile implements Comparable<Tile> {
         System.out.println("* " + leftNum + " | " + rightNum + " *");
         System.out.println("*********");
     }
+*/
 
     @Override
     public String toString() {

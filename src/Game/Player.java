@@ -9,20 +9,24 @@ public class Player {
     private List<Tile> hand;
     private final String name;
     private int points;
+    private Team team;
 
     public Player(int numPlayer) {
         this.hand = new ArrayList<>();
-        this.name = ("Player " + numPlayer);
+        this.name = ("PLAYER " + numPlayer);
         this.points = 0;
     }
 
-/*    public Tile getTile(int idx) {
-        return hand.get(idx);
-    }*/
+    public Player(int numPlayer, Team team) {
+        this.hand = new ArrayList<>();
+        this.name = ("Player " + numPlayer);
+        this.points = 0;
+        this.team = new Team();
+    }
+
 
     public Tile getTile(int idx) {
         return hand.get(idx);
-
     }
 
     public Tile putTile(int idx) {
@@ -77,7 +81,16 @@ public class Player {
 
     @Override
     public String toString() {
-        return  name + " -> " + hand + "\n" +
+
+        String pl = "";
+        int counter = 1;
+
+        for (Tile tile: hand) {
+            pl += "\n" + counter + "." + " " + tile;
+            counter++;
+        }
+
+        return   "\n" + name + "" + pl + "\n" +
                 "Current points -> " + points;
     }
 }

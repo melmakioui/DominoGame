@@ -73,7 +73,7 @@ public class Domino implements Rules {
     }
 
     @Override
-    public boolean isValidPlay(Tile tile, Board board) { //Rule
+    public boolean isValidPlay(Tile tile, Board board) { //Rule --> LEFT | RIGHT
 
         if (tile.getLeftNum() == board.getFirst().getLeftNum()
            || tile.getRightNum() == board.getLast().getRightNum()) {
@@ -88,17 +88,20 @@ public class Domino implements Rules {
     @Override
     public void addPoints(Player player, Player... players) { //solo si es ganador
 
+        //Si jugador tiene mas puntos quee todos  los demass se le sumaran los de su adversario
         player.addPoints(POINTS);
-        /**SI JUGADOR = GANA
-         * SUMA PUNTOS DE ADVERSARIOS Y/O PAREJA
-         * SOLO SI SUS PUNTOS ES MAYOR QUE LOS ADVERSARIOS
-         * */
+        int max = player.getPoints();
+        int counter = players.length -1;
 
-        /** Mirar SI LOS PUNTOS DE X JUGADOR ES MAS GRANDE QUE
-         * OTROS JUGADORES,
-         * IF TRUE --> ROBAR LOS PUNTOS DE LOS DEMAS,
-         * IF FALSE --> AGREGAR PUNTOS CORRESPONDIENTES Y CONTINUA PARTIDA
-         */
+        for (Player p: players)
+            if (player != p )
+                if (max > player.getPoints())
+                    counter--;
+
+        if (counter == 0)
+            for (Player p: players)
+                if (player != p)
+                    player.addPoints(p.getPoints());
     }
 
     @Override
@@ -111,12 +114,4 @@ public class Domino implements Rules {
         return player.getPoints() == MAX_POINTS;
     }
 
-
-    public int getMAX_PLAYERS() {
-        return MAX_PLAYERS;
-    }
-
-    public int getMIN_PLAYERS() {
-        return MIN_PLAYERS;
-    }
 }

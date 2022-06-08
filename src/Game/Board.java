@@ -33,13 +33,20 @@ public class Board {
 
     public void displayBoard(){
         for (Tile tile: board) {
-            tile.displayTile();
+            System.out.println(tile);
         }
     }
 
     @Override
     public String toString() {
-        return "BOARD: \n" +
-                board;
+
+        int counter = 0;
+        String b = "";
+
+        for (Tile tile: board ) {
+            b += tile;
+        }
+        return "\n" + "BOARD: \n" +
+                b;
     }
 }
