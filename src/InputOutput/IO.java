@@ -60,7 +60,7 @@ public class IO {
             System.out.print("> ");
             tileIdx = input.nextInt();
         }
-        return tileIdx;
+        return tileIdx - 1;
     }
 
     public static int putPosition(){

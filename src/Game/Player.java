@@ -90,7 +90,7 @@ public class Player {
             counter++;
         }
 
-        return   "\n" + name + "" + pl + "\n" +
+        return   "\n" + "YOUR TURN" + name + "" + pl + "\n" +
                 "Current points -> " + points;
     }
 }

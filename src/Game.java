@@ -19,6 +19,7 @@ public class Game {
         this.board = new Board();
         this.deck = new DeckTiles();
 
+        initPlayers();
         initMode();
         initGame();
     }
@@ -44,15 +45,6 @@ public class Game {
             players[i] = new Player(i + 1);
     }
 
-    private void initTeams() {
-        if (players.length < 4)
-            System.out.println("SORRY YOU NEED 4 PLAYERS...");
-        this.team = new Team[2];
-
-        for (int j = 0; j < team.length; j++)
-            team[j] = new Team();
-    }
-
 
     private void clearGameArea() {
         for (Player player : players) {
@@ -72,9 +64,6 @@ public class Game {
 
     public void initGame() {
 
-        if (IO.isTeam()) initTeams();
-        else initPlayers();
-
         do {
             clearGameArea();
             startGameArea();
@@ -91,42 +80,50 @@ public class Game {
 
     private void playRound() {
 
-        int selTile;
-        int position;
         Tile tempTile;
+
         System.out.println(players[turn].getName() + " STARTED!");
         changeTurn();
+        System.out.println(board);//io
 
         do {
-            System.out.println(board);
             System.out.println(players[turn]);
-
-            while (!rules.canPlay(players[turn], board)) {
-                tempTile = deck.getDominoTile();
-                System.out.println("+1 TILE " + players[turn].getName());
-                players[turn].addTile(tempTile); //para de ROBAR fichas aunque no consiga la equivalente al board
+            if (!hasTilesToPlay()){
+                changeTurn();
+                continue;
             }
-
-
-            do {
-                selTile = (IO.selectTile(players[turn].getHand().size()) - 1);
-                tempTile = players[turn].getTile(selTile);
-            } while (!(isValidPlay(tempTile, selTile)));
-
-            position = IO.putPosition();
-            if (position == 1) // verificar numero  1-2 | mirar si son compatibles otra vez
-                board.addFirst(tempTile);
-            if (position == 2) // si es valido al final
-                board.addLast(tempTile);
+            tempTile = drawCorrectTile();
+            placeTile(tempTile);
 
             players[turn].removeTile(tempTile);
 
             System.out.println(board);
             changeTurn();
-            //TODO SIMPLIFY IO, CHECK DOMINO CLASS, START PLAYING WITHOUT TEAM.
-
         } while (!rules.isRoundWinner(players[turn]));
 
+    }
+
+    private void placeTile(Tile tempTile){
+       int position = IO.putPosition();
+        if (position == 1) // verificar numero  1-2 | mirar si son compatibles otra vez
+            board.addFirst(tempTile);
+        if (position == 2) // si es valido al final
+            board.addLast(tempTile);
+    }
+
+    private Tile drawCorrectTile(){
+
+        int tiles;
+        int selected;
+        Tile tempTile;
+        do {
+            tiles = (players[turn].getHand().size() - 1);
+            selected = IO.selectTile(tiles);
+            tempTile = players[turn].getTile(selected);
+
+        } while (!(isValidPlay(tempTile, selected)));
+
+        return tempTile;
     }
 
     private boolean isValidPlay(Tile tempTile, int tile) {
@@ -134,11 +131,23 @@ public class Game {
         while (!rules.isValidPlay(tempTile, board)) {
             System.out.println("NOT EQUAL...");
             tile = (IO.selectTile(players[turn].getHand().size()) - 1);
+            tempTile = players[turn].getTile(tile);
         }
 
         return true;
     }
 
+    private boolean hasTilesToPlay( ){ //change name
+        Tile stealedTile;
+        while (!rules.canPlay(players[turn], board)) {
+            if (deck.isEmpty())
+                return false;
+            stealedTile = deck.getDominoTile();
+            System.out.println("+1 TILE " + players[turn].getName());
+            players[turn].addTile(stealedTile);
+        }
+        return true;
+    }
 
     private void changeTurn() {
         turn++;
