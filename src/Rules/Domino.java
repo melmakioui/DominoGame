@@ -62,7 +62,9 @@ public class Domino implements Rules {
 
         for (Tile tile : player.getHand())
             if (tile.getLeftNum() == last
-                    || tile.getRightNum() == first)
+                    || tile.getRightNum() == first
+                        ||tile.getLeftNum() ==first
+                            || tile.getRightNum() == last)
                 return true;
 
         return false;
