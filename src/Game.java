@@ -32,32 +32,6 @@ public class Game {
 
     }
 
-/*    private void initPlayersNew() {
-        //if (rules instanceof Latin)
-        boolean withTeams = IO.playWithTeams();
-        //tienen que ser 4
-        if (withTeams) { //SI ES LATINO SI O SI EN EQUIPOS
-            this.team = new Team[2];
-            this.players = new Player[4];
-
-            for (int i = 0; i < 2; i++) {
-                team[i] = new Team();
-                players[i] = new Player(i, team[i]); // modulus
-                players[i + 2] = new Player(i, team[i]);
-                team[i].addPlayer(players[i], players[i + 2]);
-            }
-        } else {
-            int numPlayers = IO.setQuantityPlayers();
-            this.team = new Team[numPlayers];
-            this.players = new Player[numPlayers];
-            for (int i = 0; i < players.length; i++) {
-                team[i] = new Team();
-                players[i] = new Player(i,team[i]);
-                team[i].addPlayer(players[i]);
-            }
-        }
-    }*/
-
     private void initTeams() {
 
         this.team = new Team[2];
@@ -138,7 +112,6 @@ public class Game {
         changeTurn();
 
         do {
-
             changeTurn();
             System.out.println(players[turn]);
             if (!hasTilesToPlay()) {
@@ -149,7 +122,6 @@ public class Game {
             tempTile = drawTile();
             position = IO.putPosition();
 
-            //rules.addPoints(players[0], players); //TODO COMPRUEBA SI AGREGA LOS PUNTOS
             if (isValidPlay(tempTile, position))
                 players[turn].removeTile(tempTile);
             else tempTile = chooseCorrectTile();
