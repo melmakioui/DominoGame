@@ -8,7 +8,6 @@ public class Player {
 
     private List<Tile> hand;
     private final String name;
-    private int points;
     private Team team;
 
 /*
@@ -22,8 +21,8 @@ public class Player {
     public Player(int numPlayer, Team team) {
         this.hand = new ArrayList<>();
         this.name = ("Player " + numPlayer);
-        this.points = 0;
         this.team = team;
+
     }
 
 
@@ -90,7 +89,7 @@ public class Player {
             counter++;
         }
 
-        return   "\n" + "YOUR TURN" + name + "" + pl + "\n" + team +
-                "Current points -> " + points;
+        return    "\n" + "YOUR TURN " + name + " " + pl + "\n" +
+                team + " points";
     }
 }
