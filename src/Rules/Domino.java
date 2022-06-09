@@ -71,12 +71,14 @@ public class Domino implements Rules {
     @Override
     public boolean isValidPlay(Tile tile, Board board, int position) { //Rule --> LEFT | RIGHT
 
+        int FIRST = 1;
+        int LAST = 2;
         int firstLeftNumBoard = board.getFirst().getLeftNum();
         int lastRightNumBoard = board.getLast().getRightNum();
         int leftNumTile = tile.getLeftNum();
         int rightNumTile = tile.getRightNum();
 
-        if (position == 1)
+        if (position == FIRST)
             if (firstLeftNumBoard == rightNumTile)
                 return true;
             else if (firstLeftNumBoard == leftNumTile){
@@ -84,7 +86,7 @@ public class Domino implements Rules {
                 return true;
             }
 
-        if (position == 2)
+        if (position == LAST)
             if (lastRightNumBoard == leftNumTile)
                 return true;
             else if (lastRightNumBoard == rightNumTile){

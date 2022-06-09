@@ -74,7 +74,7 @@ public class Game {
             board.addLast(initialTile);
             System.out.println(board);
             playRound();
-            rules.addPoints(players[turn]); // --
+            rules.addPoints(players[turn]);
         } while (!rules.isWinner(players[turn]));
     }
 
@@ -94,15 +94,11 @@ public class Game {
             tempTile = drawTile();
             int position = IO.putPosition();
 
-            if (position == 1) {
-                if (rules.isValidPlay(tempTile,board,position))
-                    board.addFirst(tempTile);
-            } else if (position == 2)
-                if (rules.isValidPlay(tempTile,board,position))
-                    board.addLast(tempTile);
+            if (isValidPlay(tempTile, position))
+                players[turn].removeTile(tempTile);
+            else  tempTile = chooseCorrectTile();
 
             players[turn].removeTile(tempTile);
-
             System.out.println(board);
             changeTurn();
         } while (!rules.isRoundWinner(players[turn]));
@@ -119,15 +115,48 @@ public class Game {
         return tempTile;
     }
 
+    private boolean isValidPlay(Tile tempTile, int position) {
+
+        int FIRST = 1;
+        int LAST = 2;
+
+        if (position == FIRST)
+            if (rules.isValidPlay(tempTile, board, position)) {
+                board.addFirst(tempTile);
+                return true;
+            }
+
+        if (position == LAST)
+            if (rules.isValidPlay(tempTile, board, position)) {
+                board.addLast(tempTile);
+                return true;
+            }
+        return false;
+    }
+
+    private Tile chooseCorrectTile() {
+        System.out.println("INCORRECT TILE...");
+        Tile correctTile = drawTile();
+        int position = IO.putPosition();
+        while (!isValidPlay(correctTile, position)) {
+            correctTile = drawTile();
+            position = IO.putPosition();
+        }
+
+        return correctTile;
+    }
+
     private boolean hasTilesToPlay() { //change name
         Tile stealedTile;
+        int quantity = 1;
         while (!rules.canPlay(players[turn], board)) {
             if (deck.isEmpty())
                 return false;
             stealedTile = deck.getDominoTile();
-            System.out.println("+1 TILE " + players[turn].getName());
+            System.out.println(players[turn].getName() + " +" + quantity + "TILE" + players[turn].getName());
             players[turn].addTile(stealedTile);
         }
+        //System.out.println(players[turn]);
         return true;
     }
 
