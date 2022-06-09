@@ -1,9 +1,8 @@
 
 import InputOutput.IO;
-import Rules.Domino;
+import Rules.*;
 import Game.*;
-import Rules.Rules;
-import Rules.Chilean;
+
 
 public class Game {
 
@@ -19,7 +18,6 @@ public class Game {
         this.board = new Board();
         this.deck = new DeckTiles();
 
-        initPlayers();
         initMode();
         initGame();
     }
@@ -34,26 +32,66 @@ public class Game {
 
     }
 
-    private void initPlayers() {
-        int min = 2;
-        int max = 4;
+/*    private void initPlayersNew() {
+        //if (rules instanceof Latin)
+        boolean withTeams = IO.playWithTeams();
+        //tienen que ser 4
+        if (withTeams) { //SI ES LATINO SI O SI EN EQUIPOS
+            this.team = new Team[2];
+            this.players = new Player[4];
 
-        int numPlayers = IO.setQuantityPlayers(min, max);
+            for (int i = 0; i < 2; i++) {
+                team[i] = new Team();
+                players[i] = new Player(i, team[i]); // modulus
+                players[i + 2] = new Player(i, team[i]);
+                team[i].addPlayer(players[i], players[i + 2]);
+            }
+        } else {
+            int numPlayers = IO.setQuantityPlayers();
+            this.team = new Team[numPlayers];
+            this.players = new Player[numPlayers];
+            for (int i = 0; i < players.length; i++) {
+                team[i] = new Team();
+                players[i] = new Player(i,team[i]);
+                team[i].addPlayer(players[i]);
+            }
+        }
+    }*/
+
+    private void initTeams() {
+
+        this.team = new Team[2];
+        this.players = new Player[4];
+
+        for (int i = 0; i < 2; i++) {
+            team[i] = new Team(i + 1);
+            players[i] = new Player(i, team[i]);
+            players[i + 2] = new Player(i, team[i]);
+            team[i].addPlayer(players[i], players[i + 2]);
+        }
+    }
+
+
+    private void initPlayers() {
+        int numPlayers = IO.setQuantityPlayers();
+
+        this.team = new Team[numPlayers];
         this.players = new Player[numPlayers];
 
-        for (int i = 0; i < players.length; i++)
-            players[i] = new Player(i + 1);
+        for (int i = 0; i < players.length; i++) {
+            team[i] = new Team(i + 1);
+            players[i] = new Player(i, team[i]);
+            team[i].addPlayer(players[i]);
+        }
     }
 
 
     private void clearGameArea() {
         for (Player player : players) {
             player.clearHand();
-            player.removePoints();
         }
         deck.clearDeck();
         board.clearBoard();
-        //team.removePoints
     }
 
     private void startGameArea() {
@@ -63,6 +101,14 @@ public class Game {
     }
 
     public void initGame() {
+        if (rules instanceof Latin) {
+            initTeams();
+        } else {
+            boolean withTeams = IO.playWithTeams();
+            if (withTeams)
+                initTeams();
+            else initPlayers();
+        }
 
         do {
             clearGameArea();
@@ -75,16 +121,25 @@ public class Game {
             System.out.println(board);
             playRound();
             rules.addPoints(players[turn]);
+
+            for (int i = 0; i < team.length; i++)
+                System.out.println(team);
+
         } while (!rules.isWinner(players[turn]));
+
+        //DISPLAY WINNER
     }
 
     private void playRound() {
 
         Tile tempTile;
+        int position;
         System.out.println(players[turn].getName() + " STARTED!");
         changeTurn();
 
         do {
+
+            changeTurn();
             System.out.println(players[turn]);
             if (!hasTilesToPlay()) {
                 changeTurn();
@@ -92,15 +147,15 @@ public class Game {
             }
 
             tempTile = drawTile();
-            int position = IO.putPosition();
+            position = IO.putPosition();
 
+            //rules.addPoints(players[0], players); //TODO COMPRUEBA SI AGREGA LOS PUNTOS
             if (isValidPlay(tempTile, position))
                 players[turn].removeTile(tempTile);
-            else  tempTile = chooseCorrectTile();
+            else tempTile = chooseCorrectTile();
 
             players[turn].removeTile(tempTile);
             System.out.println(board);
-            changeTurn();
         } while (!rules.isRoundWinner(players[turn]));
     }
 
@@ -135,25 +190,28 @@ public class Game {
     }
 
     private Tile chooseCorrectTile() {
-        System.out.println("INCORRECT TILE...");
-        Tile correctTile = drawTile();
-        int position = IO.putPosition();
-        while (!isValidPlay(correctTile, position)) {
+        Tile correctTile;
+        int position;
+
+        do {
+            System.out.println("INCORRECT TILE...");
             correctTile = drawTile();
             position = IO.putPosition();
-        }
+        } while (!isValidPlay(correctTile, position));
 
         return correctTile;
     }
 
     private boolean hasTilesToPlay() { //change name
         Tile stealedTile;
-        int quantity = 1;
-        while (!rules.canPlay(players[turn], board)) {
-            if (deck.isEmpty())
+
+        while (!rules.canPlayTile(players[turn], board)) {
+            if (deck.isEmpty()){
+                System.out.println("YOU CANT PLAY TILE... AND DECK IS EMPTY!!! PASS...");
                 return false;
+            }
             stealedTile = deck.getDominoTile();
-            System.out.println(players[turn].getName() + " +" + quantity + "TILE" + players[turn].getName());
+            System.out.println(players[turn].getName() + " +" + 1 + "TILE" + players[turn].getName());
             players[turn].addTile(stealedTile);
         }
         //System.out.println(players[turn]);
