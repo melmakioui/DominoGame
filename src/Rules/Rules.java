@@ -13,7 +13,7 @@ public interface Rules {
 
     boolean canPlay(Player player, Board board);
 
-    boolean isValidPlay (Tile tile, Board board);
+    boolean isValidPlay (Tile tile, Board board, int pos);
 
     void addPoints(Player player, Player...players);
 

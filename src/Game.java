@@ -53,6 +53,7 @@ public class Game {
         }
         deck.clearDeck();
         board.clearBoard();
+        //team.removePoints
     }
 
     private void startGameArea() {
@@ -60,7 +61,6 @@ public class Game {
         rules.drawTileFromDeck(deck, players);
         board.displayBoard();
     }
-
 
     public void initGame() {
 
@@ -72,72 +72,54 @@ public class Game {
 
             Tile initialTile = players[turn].putTile(0);
             board.addLast(initialTile);
-            System.out.println("-" + board + "-");;
-
+            System.out.println(board);
             playRound();
+            rules.addPoints(players[turn]); // --
         } while (!rules.isWinner(players[turn]));
     }
 
     private void playRound() {
 
         Tile tempTile;
-
         System.out.println(players[turn].getName() + " STARTED!");
         changeTurn();
-        System.out.println(board);//io
 
         do {
             System.out.println(players[turn]);
-            if (!hasTilesToPlay()){
+            if (!hasTilesToPlay()) {
                 changeTurn();
                 continue;
             }
-            tempTile = drawCorrectTile();
-            placeTile(tempTile);
+
+            tempTile = drawTile();
+            int position = IO.putPosition();
+
+            if (position == 1) {
+                if (rules.isValidPlay(tempTile,board,position))
+                    board.addFirst(tempTile);
+            } else if (position == 2)
+                if (rules.isValidPlay(tempTile,board,position))
+                    board.addLast(tempTile);
 
             players[turn].removeTile(tempTile);
 
             System.out.println(board);
             changeTurn();
         } while (!rules.isRoundWinner(players[turn]));
-
     }
 
-    private void placeTile(Tile tempTile){
-       int position = IO.putPosition();
-        if (position == 1) // verificar numero  1-2 | mirar si son compatibles otra vez
-            board.addFirst(tempTile);
-        if (position == 2) // si es valido al final
-            board.addLast(tempTile);
-    }
+    private Tile drawTile() {
 
-    private Tile drawCorrectTile(){
-
-        int tiles;
-        int selected;
+        int tiles = (players[turn].getHand().size() - 1);
+        int selectedTile;
         Tile tempTile;
-        do {
-            tiles = (players[turn].getHand().size() - 1);
-            selected = IO.selectTile(tiles);
-            tempTile = players[turn].getTile(selected);
 
-        } while (!(isValidPlay(tempTile, selected)));
-
+        selectedTile = IO.selectTile(tiles);
+        tempTile = players[turn].getTile(selectedTile);
         return tempTile;
     }
 
-    private boolean isValidPlay(Tile tempTile, int tile) {
-
-        while (!rules.isValidPlay(tempTile, board)) {
-            System.out.println("NOT EQUAL...");
-            tile = (IO.selectTile(players[turn].getHand().size()) - 1);
-            tempTile = players[turn].getTile(tile);
-        }
-
-        return true;
-    }
-
-    private boolean hasTilesToPlay( ){ //change name
+    private boolean hasTilesToPlay() { //change name
         Tile stealedTile;
         while (!rules.canPlay(players[turn], board)) {
             if (deck.isEmpty())

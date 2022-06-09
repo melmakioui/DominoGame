@@ -30,10 +30,10 @@ public class Chilean extends Domino{
         return super.canPlay(player, board);
     }
 
-    @Override
-    public boolean isValidPlay(Tile tile, Board board) {
-        return super.isValidPlay(tile, board);
-    }
+
+/*    public boolean isValidPlay(Tile tile, Board board, int position) {
+        return super.isValidPlay(tile, board,position);
+    }*/
 
     @Override
     public void addPoints(Player player, Player... players) {

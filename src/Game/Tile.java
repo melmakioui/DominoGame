@@ -28,40 +28,6 @@ public class Tile implements Comparable<Tile> {
         rightNum = temp;
     }
 
-/*    public void displayTile() {
-        if (leftNum == rightNum) {
-            displayDoubleTile();
-            return;
-        }
-
-        displayNormalTile();
-    }*/
-
-/*
-    //Moure a un altre clase
-    public void displayNormalTile() {
-        System.out.println("  *****");
-        System.out.println("  * " + leftNum + " *");
-        System.out.println("  *---*");
-        System.out.println("  * " + rightNum + " *");
-        System.out.println("  *****");
-    }
-
-    public void displayReverseNormalTile() {
-        System.out.println("  *****");
-        System.out.println("  * " + rightNum + " *");
-        System.out.println("  *---*");
-        System.out.println("  * " + leftNum + " *");
-        System.out.println("  *****");
-    }
-
-    public void displayDoubleTile() {
-        System.out.println("*********");
-        System.out.println("* " + leftNum + " | " + rightNum + " *");
-        System.out.println("*********");
-    }
-*/
-
     @Override
     public String toString() {
         return "[ " + leftNum + " | " + rightNum + " ]";
@@ -69,10 +35,7 @@ public class Tile implements Comparable<Tile> {
 
     @Override
     public int compareTo(Tile o) {
-        // 1,0,-1
-        //return (getSumTile() > o.getSumTile())? 1 : -1 ;
-        //reverseTile();
-        //o.reverseTile();
+
         if( leftNum == o.getLeftNum() )
             if (rightNum > o.getRightNum()) {
                 return 1;

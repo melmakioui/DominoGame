@@ -13,10 +13,6 @@ public class Domino implements Rules {
     protected final int MIN_PLAYERS = 2;
     protected final int MAX_PLAYERS = 4;
 
-    /**EL PRIMERO EN LLEGAR A UN PUNTO DETERMINADO DE PUNTOS gana*
-     * CHILENO EL QUE LLEGUE A UN PUNTO DETERMINADO pierde LA PARTIDA
-     * LATINO
-     */
     public Domino() {
 
 
@@ -39,7 +35,7 @@ public class Domino implements Rules {
 
     @Override
     public void stealTile(Player player, DeckTiles deckTiles) {
-        if (deckTiles.isEmpty())
+        if (!deckTiles.isEmpty())
             player.addTile(deckTiles.getDominoTile());
     }
 
@@ -59,47 +55,60 @@ public class Domino implements Rules {
     }
 
     @Override
-    public boolean canPlay(Player player,Board board) {
+    public boolean canPlay(Player player, Board board) {
 
         int first = board.getFirst().getLeftNum();
         int last = board.getLast().getRightNum();
 
         for (Tile tile : player.getHand())
             if (tile.getLeftNum() == last
-               || tile.getRightNum() == first)
+                    || tile.getRightNum() == first)
                 return true;
 
         return false;
     }
 
     @Override
-    public boolean isValidPlay(Tile tile, Board board) { //Rule --> LEFT | RIGHT
+    public boolean isValidPlay(Tile tile, Board board, int position) { //Rule --> LEFT | RIGHT
 
-        if (tile.getLeftNum() == board.getFirst().getLeftNum()
-           || tile.getRightNum() == board.getLast().getRightNum()) {
-            tile.reverseTile();
-            return true;
-        }
+        int firstLeftNumBoard = board.getFirst().getLeftNum();
+        int lastRightNumBoard = board.getLast().getRightNum();
+        int leftNumTile = tile.getLeftNum();
+        int rightNumTile = tile.getRightNum();
 
-        return tile.getRightNum() == board.getFirst().getLeftNum()
-                || tile.getLeftNum() == board.getLast().getRightNum();
+        if (position == 1)
+            if (firstLeftNumBoard == rightNumTile)
+                return true;
+            else if (firstLeftNumBoard == leftNumTile){
+                tile.reverseTile();
+                return true;
+            }
+
+        if (position == 2)
+            if (lastRightNumBoard == leftNumTile)
+                return true;
+            else if (lastRightNumBoard == rightNumTile){
+                tile.reverseTile();
+                return true;
+            }
+
+        return false;
     }
 
     @Override
-    public void addPoints(Player player, Player... players) { //solo si es ganador
+    public void addPoints(Player player, Player...players) { //solo si es ganador
 
-        //Si jugador tiene mas puntos quee todos  los demass se le sumaran los de su adversario
         player.addPoints(POINTS);
         int max = player.getPoints();
-        int counter = players.length -1;
+        int counter = players.length - 1;
 
-        for (Player p: players)
-            if (player != p )
+        for (Player p : players)
+            if (player != p)
                 if (max > player.getPoints())
                     counter--;
 
         if (counter == 0)
-            for (Player p: players)
+            for (Player p : players)
                 if (player != p)
                     player.addPoints(p.getPoints());
     }
@@ -111,7 +120,7 @@ public class Domino implements Rules {
 
     @Override
     public boolean isWinner(Player player) { //Rule
-        return player.getPoints() == MAX_POINTS;
+        return player.getPoints() >= MAX_POINTS;
     }
 
 }
