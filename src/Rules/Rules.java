@@ -11,7 +11,7 @@ public interface Rules {
 
     int startPlayer(Player...player);
 
-    boolean canPlay(Player player, Board board);
+    boolean canPlayTile(Player player, Board board);
 
     boolean isValidPlay (Tile tile, Board board, int pos);
 
@@ -20,6 +20,8 @@ public interface Rules {
     boolean isRoundWinner(Player player);
 
     boolean isWinner(Player player);
+
+    boolean isDeadGame(DeckTiles deckTiles);
 
 
 

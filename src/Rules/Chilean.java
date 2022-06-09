@@ -3,7 +3,6 @@ package Rules;
 import Game.Board;
 import Game.DeckTiles;
 import Game.Player;
-import Game.Tile;
 
 public class Chilean extends Domino{
 
@@ -26,8 +25,8 @@ public class Chilean extends Domino{
     }
 
     @Override
-    public boolean canPlay(Player player, Board board) {
-        return super.canPlay(player, board);
+    public boolean canPlayTile(Player player, Board board) {
+        return super.canPlayTile(player, board);
     }
 
 

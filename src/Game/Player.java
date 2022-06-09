@@ -11,17 +11,19 @@ public class Player {
     private int points;
     private Team team;
 
+/*
     public Player(int numPlayer) {
         this.hand = new ArrayList<>();
         this.name = ("PLAYER " + numPlayer);
         this.points = 0;
     }
+*/
 
     public Player(int numPlayer, Team team) {
         this.hand = new ArrayList<>();
         this.name = ("Player " + numPlayer);
         this.points = 0;
-        this.team = new Team();
+        this.team = team;
     }
 
 
@@ -53,17 +55,15 @@ public class Player {
     }
 
     public void addPoints(int points) {
-        this.points += points;
+        this.team.addPoints(points);
     }
 
-    public int removePoints() {
-        int temp = points;
-        points = 0;
-        return temp;
+    public void removePoints() {
+        this.team.removePoints();
     }
 
     public int getPoints(){
-        return this.points;
+        return this.team.getPoints();
     }
 
     public int getMaxTile() {
@@ -90,7 +90,7 @@ public class Player {
             counter++;
         }
 
-        return   "\n" + "YOUR TURN" + name + "" + pl + "\n" +
+        return   "\n" + "YOUR TURN" + name + "" + pl + "\n" + team +
                 "Current points -> " + points;
     }
 }

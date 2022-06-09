@@ -55,7 +55,7 @@ public class Domino implements Rules {
     }
 
     @Override
-    public boolean canPlay(Player player, Board board) {
+    public boolean canPlayTile(Player player, Board board) {
 
         int first = board.getFirst().getLeftNum();
         int last = board.getLast().getRightNum();
@@ -113,6 +113,11 @@ public class Domino implements Rules {
             for (Player p : players)
                 if (player != p)
                     player.addPoints(p.getPoints());
+    }
+
+    @Override
+    public boolean isDeadGame(DeckTiles deckTiles) {
+        return false;
     }
 
     @Override
