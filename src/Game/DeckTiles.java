@@ -38,4 +38,8 @@ public class DeckTiles {
     public void shuffleDeck(){
         Collections.shuffle(deckTiles);
     }
+
+    public List<Tile> getDeckTiles() {
+        return deckTiles;
+    }
 }

@@ -1,5 +1,7 @@
 package Rules;
+
 import Game.*;
+
 public interface Rules {
 
 
@@ -9,20 +11,21 @@ public interface Rules {
 
     void stealTile(Player player, DeckTiles deckTiles);
 
-    int startPlayer(Player...player);
+    int startPlayer(Player... player);
 
-    boolean canPlayTile(Player player, Board board);
+    boolean hasPlayableTile(Player player, Board board);
 
-    boolean isValidPlay (Tile tile, Board board, int pos);
+    boolean hasPlayableTile(Tile tile, Board board);
 
-    void addPoints(Player player, Player...players);
+    boolean isValidPlay(Tile tile, Board board, int pos);
+
+    void addPoints(Player player, Player... players);
 
     boolean isRoundWinner(Player player);
 
     boolean isWinner(Player player);
 
-    boolean isDeadGame(DeckTiles deckTiles);
-
+    boolean isDeadGame(DeckTiles deckTiles, Board board, Player... players);
 
 
 }

@@ -24,12 +24,11 @@ public class Game {
 
     private void initMode() {
         int mode = IO.selectMode();
-
         switch (mode) {
             case 1 -> rules = new Domino();
             case 2 -> rules = new Chilean();
+            case 3 -> rules = new Latin();
         }
-
     }
 
     private void initTeams() {
@@ -37,11 +36,12 @@ public class Game {
         this.team = new Team[2];
         this.players = new Player[4];
 
-        for (int i = 0; i < 2; i++) {
-            team[i] = new Team(i + 1);
-            players[i] = new Player(i, team[i]);
-            players[i + 2] = new Player(i, team[i]);
-            team[i].addPlayer(players[i], players[i + 2]);
+        for (int n = 0; n < 2; n++) {
+            team[n] = new Team(n + 1);
+            players[n] = new Player(n + 1, team[n]);
+            players[n + 2] = new Player(n, team[n]);
+
+            team[n].addPlayer(players[n], players[n + 2]);
         }
     }
 
@@ -52,13 +52,12 @@ public class Game {
         this.team = new Team[numPlayers];
         this.players = new Player[numPlayers];
 
-        for (int i = 0; i < players.length; i++) {
-            team[i] = new Team(i + 1);
-            players[i] = new Player(i, team[i]);
-            team[i].addPlayer(players[i]);
+        for (int n = 0; n < players.length; n++) {
+            team[n] = new Team(n + 1);
+            players[n] = new Player(n + 1, team[n]);
+            team[n].addPlayer(players[n]);
         }
     }
-
 
     private void clearGameArea() {
         for (Player player : players) {
@@ -70,19 +69,20 @@ public class Game {
 
     private void startGameArea() {
         rules.initTiles(deck);
+        deck.shuffleDeck();
         rules.drawTileFromDeck(deck, players);
         board.displayBoard();
     }
 
     public void initGame() {
-        if (rules instanceof Latin) {
+        if (rules instanceof Latin)
             initTeams();
-        } else {
-            boolean withTeams = IO.playWithTeams();
-            if (withTeams)
-                initTeams();
-            else initPlayers();
-        }
+
+        boolean withTeams = IO.playWithTeams();
+        if (withTeams)
+            initTeams();
+        else initPlayers();
+
 
         do {
             clearGameArea();
@@ -93,11 +93,14 @@ public class Game {
             Tile initialTile = players[turn].putTile(0);
             board.addLast(initialTile);
             System.out.println(board);
+
             playRound();
             rules.addPoints(players[turn]);
 
-            for (int i = 0; i < team.length; i++)
-                System.out.println(team);
+            System.out.println("WINNERS!!!");
+            for (Player p : players) { //DISPLAY RESUMEN
+                System.out.println(p);
+            }
 
         } while (!rules.isWinner(players[turn]));
 
@@ -112,12 +115,17 @@ public class Game {
         changeTurn();
 
         do {
+            if (rules.isDeadGame(deck, board, players))
+                break; //BUSCAR EL JUGADOR CON MAS PUNTOS
+
             changeTurn();
-            System.out.println(players[turn]);
+
             if (!hasTilesToPlay()) {
                 changeTurn();
                 continue;
             }
+
+            System.out.println(players[turn]);
 
             tempTile = drawTile();
             position = IO.putPosition();
@@ -144,8 +152,8 @@ public class Game {
 
     private boolean isValidPlay(Tile tempTile, int position) {
 
-        int FIRST = 1;
-        int LAST = 2;
+        final int FIRST = 1;
+        final int LAST = 2;
 
         if (position == FIRST)
             if (rules.isValidPlay(tempTile, board, position)) {
@@ -177,16 +185,16 @@ public class Game {
     private boolean hasTilesToPlay() { //change name
         Tile stealedTile;
 
-        while (!rules.canPlayTile(players[turn], board)) {
-            if (deck.isEmpty()){
-                System.out.println("YOU CANT PLAY TILE... AND DECK IS EMPTY!!! PASS...");
+        while (!rules.hasPlayableTile(players[turn], board)) {
+            if (deck.isEmpty()) {
+                System.out.println("YOU CANT PLAY ANY TILE... AND DECK IS EMPTY!!! PASS...");
                 return false;
             }
             stealedTile = deck.getDominoTile();
-            System.out.println(players[turn].getName() + " +" + 1 + "TILE" + players[turn].getName());
+            System.out.println(players[turn].getName() + " +" + 1 + " TILE " + players[turn].getName());
             players[turn].addTile(stealedTile);
         }
-        //System.out.println(players[turn]);
+        System.out.println(board);
         return true;
     }
 

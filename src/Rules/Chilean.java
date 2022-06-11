@@ -25,8 +25,8 @@ public class Chilean extends Domino{
     }
 
     @Override
-    public boolean canPlayTile(Player player, Board board) {
-        return super.canPlayTile(player, board);
+    public boolean hasPlayableTile(Player player, Board board) {
+        return super.hasPlayableTile(player, board);
     }
 
 
