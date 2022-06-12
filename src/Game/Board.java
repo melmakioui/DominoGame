@@ -31,16 +31,9 @@ public class Board {
         board.clear();
     }
 
-    public void displayBoard(){
-        for (Tile tile: board) {
-            System.out.println(tile);
-        }
-    }
-
     @Override
     public String toString() {
 
-        int counter = 0;
         String b = "";
 
         for (Tile tile: board ) {

@@ -1,5 +1,6 @@
 
 import InputOutput.Input;
+import InputOutput.Output;
 import Rules.*;
 import Game.*;
 
@@ -59,33 +60,28 @@ public class Game {
         }
     }
 
-    private void clearGameArea() {
+    private void startGameArea() {
         for (Player player : players) {
             player.clearHand();
         }
         deck.clearDeck();
         board.clearBoard();
-    }
 
-    private void startGameArea() {
         domino.initTiles(deck);
-        deck.shuffleDeck();
         domino.drawTileFromDeck(deck, players);
-        board.displayBoard();
     }
 
     public void initGame() {
-        if (domino instanceof Latin)
+        if (domino instanceof Latin) {
             initTeams();
-
-        boolean withTeams = Input.playWithTeams();
-        if (withTeams)
-            initTeams();
-        else initPlayers();
-
+        } else {
+            boolean withTeams = Input.playWithTeams();
+            if (withTeams)
+                initTeams();
+            else initPlayers();
+        }
 
         do {
-            clearGameArea();
             startGameArea();
 
             turn = domino.startPlayer(players);
@@ -95,32 +91,29 @@ public class Game {
             System.out.println(board);
 
             playRound();
-            domino.addPoints(players[turn]);
 
-            System.out.println("WINNERS!!!");
-            for (Player p : players) { //DISPLAY RESUMEN
-                System.out.println(p);
-            }
+            domino.addPoints(players[turn]);
+            Output.displaySummary(players);
 
         } while (!domino.isWinner(players[turn]));
 
-        //DISPLAY WINNER
+        Output.displayWinner(domino, players[turn]);
     }
 
     private void playRound() {
 
         Tile tempTile;
         int position;
-        System.out.println(players[turn].getName() + " STARTED!");
-        changeTurn();
+        System.out.println(players[turn].getName() + " STARTED!"); // OUTPUT
 
         do {
+            changeTurn();
             if (domino.isDeadGame(deck, board, players))
                 break; //BUSCAR EL JUGADOR CON MAS PUNTOS
 
-            changeTurn();
-
             if (!hasTilesToPlay()) {
+                if (domino instanceof Latin)
+                    System.out.println("SUMA PUNTOS AL ANTERIOR");
                 changeTurn();
                 continue;
             }
@@ -152,20 +145,20 @@ public class Game {
 
     private boolean isValidPlay(Tile tempTile, int position) {
 
-        final int FIRST = 1;
-        final int LAST = 2;
-
-        if (position == FIRST)
-            if (domino.isValidPlay(tempTile, board, position)) {
-                board.addFirst(tempTile);
-                return true;
+        switch (position) {
+            case 1 -> {
+                if (domino.isValidPlay(tempTile, board, position)) {
+                    board.addFirst(tempTile);
+                    return true;
+                }
             }
-
-        if (position == LAST)
-            if (domino.isValidPlay(tempTile, board, position)) {
-                board.addLast(tempTile);
-                return true;
+            case 2 -> {
+                if (domino.isValidPlay(tempTile, board, position)) {
+                    board.addLast(tempTile);
+                    return true;
+                }
             }
+        }
         return false;
     }
 
@@ -174,7 +167,7 @@ public class Game {
         int position;
 
         do {
-            System.out.println("INCORRECT TILE...");
+            Output.dislayIncorrectTile();
             correctTile = drawTile();
             position = Input.putPosition();
         } while (!isValidPlay(correctTile, position));
@@ -182,17 +175,16 @@ public class Game {
         return correctTile;
     }
 
-    private boolean hasTilesToPlay() { //change name
+    private boolean hasTilesToPlay() {
 
         while (!domino.hasPlayableTile(players[turn], board)) {
             if (deck.isEmpty()) {
-                System.out.println("YOU CANT PLAY ANY TILE... AND DECK IS EMPTY!!! PASS...");
+                Output.displayDeckEmpty();
                 return false;
             }
-            domino.stealTile(players[turn],deck); //conseguir que ficha es
+            domino.stealTile(players[turn], deck);
             System.out.println(players[turn].getName() + " +" + 1 + " TILE");
         }
-        System.out.println(board);
         return true;
     }
 
