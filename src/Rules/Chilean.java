@@ -3,6 +3,7 @@ package Rules;
 import Game.Board;
 import Game.DeckTiles;
 import Game.Player;
+import Game.Tile;
 
 public class Chilean extends Domino{
 
@@ -18,10 +19,14 @@ public class Chilean extends Domino{
         super.drawTileFromDeck(deckTiles, players);
     }
 
-
     @Override
     public void stealTile(Player player, DeckTiles deckTiles) {
         super.stealTile(player, deckTiles);
+    }
+
+    @Override
+    public int startPlayer(Player... player) {
+        return super.startPlayer(player);
     }
 
     @Override
@@ -29,10 +34,20 @@ public class Chilean extends Domino{
         return super.hasPlayableTile(player, board);
     }
 
+    @Override
+    public boolean isPlayableTile(Tile tile, Board board) {
+        return super.isPlayableTile(tile, board);
+    }
 
-/*    public boolean isValidPlay(Tile tile, Board board, int position) {
-        return super.isValidPlay(tile, board,position);
-    }*/
+    @Override
+    public boolean isValidPlay(Tile tile, Board board, int position) {
+        return super.isValidPlay(tile, board, position);
+    }
+
+    @Override
+    public boolean isDeadGame(DeckTiles deckTiles, Board board, Player... players) {
+        return super.isDeadGame(deckTiles, board, players);
+    }
 
     @Override
     public void addPoints(Player player, Player... players) {
@@ -46,6 +61,6 @@ public class Chilean extends Domino{
 
     @Override
     public boolean isWinner(Player player) {
-        return super.isWinner(player);
+        return player.getPoints() > MAX_POINTS;
     }
 }

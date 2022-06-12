@@ -15,8 +15,6 @@ public interface DominoRules {
 
     boolean hasPlayableTile(Player player, Board board);
 
-    boolean hasPlayableTile(Tile tile, Board board);
-
     boolean isValidPlay(Tile tile, Board board, int pos);
 
     void addPoints(Player player, Player... players);
