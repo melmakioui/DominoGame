@@ -19,6 +19,10 @@ public interface DominoRules {
 
     void addPoints(Player player, Player... players);
 
+    boolean isPlayableTile(Tile tile, Board board);
+
+    int getWinnerDeadGame(Player... players);
+
     boolean isRoundWinner(Player player);
 
     boolean isWinner(Player player);

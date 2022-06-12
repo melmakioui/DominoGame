@@ -108,8 +108,11 @@ public class Game {
 
         do {
             changeTurn();
-            if (domino.isDeadGame(deck, board, players))
-                break; //BUSCAR EL JUGADOR CON MAS PUNTOS
+            if (domino.isDeadGame(deck, board, players)){
+                turn = domino.getWinnerDeadGame(players);
+                Output.displayWinnerDeadGame(players[turn],domino);
+                break;
+            }
 
             if (!hasTilesToPlay()) {
                 if (domino instanceof Latin)

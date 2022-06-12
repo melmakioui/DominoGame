@@ -112,6 +112,7 @@ public class Domino implements DominoRules {
         return true;
     }
 
+    @Override
     public boolean isPlayableTile(Tile tile, Board board) {
 
         int first = board.getFirst().getLeftNum();
@@ -123,8 +124,8 @@ public class Domino implements DominoRules {
                 || tile.getRightNum() == last;
     }
 
-
-    public int isWinnerDeadGame (Player...players){
+    @Override
+    public int getWinnerDeadGame (Player...players){
 
         int min = 0;
         int idx = 0;
