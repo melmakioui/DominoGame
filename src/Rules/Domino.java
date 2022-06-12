@@ -5,7 +5,7 @@ import Game.DeckTiles;
 import Game.Player;
 import Game.Tile;
 
-public class Domino implements Rules {
+public class Domino implements DominoRules {
 
     protected final int MAX_POINTS = 12;
     protected final int POINTS = 12;
@@ -34,6 +34,7 @@ public class Domino implements Rules {
     public void stealTile(Player player, DeckTiles deckTiles) {
         if (!deckTiles.isEmpty())
             player.addTile(deckTiles.getDominoTile());
+        //Output.displayGettedTile
     }
 
     @Override

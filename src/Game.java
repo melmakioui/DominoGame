@@ -1,5 +1,5 @@
 
-import InputOutput.IO;
+import InputOutput.Input;
 import Rules.*;
 import Game.*;
 
@@ -9,7 +9,7 @@ public class Game {
     private Team team[];
     private Player[] players;
     private Board board;
-    private Rules rules;
+    private DominoRules domino;
     private DeckTiles deck;
     private static int turn = 0;
 
@@ -23,11 +23,11 @@ public class Game {
     }
 
     private void initMode() {
-        int mode = IO.selectMode();
+        int mode = Input.selectMode();
         switch (mode) {
-            case 1 -> rules = new Domino();
-            case 2 -> rules = new Chilean();
-            case 3 -> rules = new Latin();
+            case 1 -> domino = new Domino();
+            case 2 -> domino = new Chilean();
+            case 3 -> domino = new Latin();
         }
     }
 
@@ -47,7 +47,7 @@ public class Game {
 
 
     private void initPlayers() {
-        int numPlayers = IO.setQuantityPlayers();
+        int numPlayers = Input.setQuantityPlayers();
 
         this.team = new Team[numPlayers];
         this.players = new Player[numPlayers];
@@ -68,17 +68,17 @@ public class Game {
     }
 
     private void startGameArea() {
-        rules.initTiles(deck);
+        domino.initTiles(deck);
         deck.shuffleDeck();
-        rules.drawTileFromDeck(deck, players);
+        domino.drawTileFromDeck(deck, players);
         board.displayBoard();
     }
 
     public void initGame() {
-        if (rules instanceof Latin)
+        if (domino instanceof Latin)
             initTeams();
 
-        boolean withTeams = IO.playWithTeams();
+        boolean withTeams = Input.playWithTeams();
         if (withTeams)
             initTeams();
         else initPlayers();
@@ -88,21 +88,21 @@ public class Game {
             clearGameArea();
             startGameArea();
 
-            turn = rules.startPlayer(players);
+            turn = domino.startPlayer(players);
 
             Tile initialTile = players[turn].putTile(0);
             board.addLast(initialTile);
             System.out.println(board);
 
             playRound();
-            rules.addPoints(players[turn]);
+            domino.addPoints(players[turn]);
 
             System.out.println("WINNERS!!!");
             for (Player p : players) { //DISPLAY RESUMEN
                 System.out.println(p);
             }
 
-        } while (!rules.isWinner(players[turn]));
+        } while (!domino.isWinner(players[turn]));
 
         //DISPLAY WINNER
     }
@@ -115,7 +115,7 @@ public class Game {
         changeTurn();
 
         do {
-            if (rules.isDeadGame(deck, board, players))
+            if (domino.isDeadGame(deck, board, players))
                 break; //BUSCAR EL JUGADOR CON MAS PUNTOS
 
             changeTurn();
@@ -128,7 +128,7 @@ public class Game {
             System.out.println(players[turn]);
 
             tempTile = drawTile();
-            position = IO.putPosition();
+            position = Input.putPosition();
 
             if (isValidPlay(tempTile, position))
                 players[turn].removeTile(tempTile);
@@ -136,7 +136,7 @@ public class Game {
 
             players[turn].removeTile(tempTile);
             System.out.println(board);
-        } while (!rules.isRoundWinner(players[turn]));
+        } while (!domino.isRoundWinner(players[turn]));
     }
 
     private Tile drawTile() {
@@ -145,7 +145,7 @@ public class Game {
         int selectedTile;
         Tile tempTile;
 
-        selectedTile = IO.selectTile(tiles);
+        selectedTile = Input.selectTile(tiles);
         tempTile = players[turn].getTile(selectedTile);
         return tempTile;
     }
@@ -156,13 +156,13 @@ public class Game {
         final int LAST = 2;
 
         if (position == FIRST)
-            if (rules.isValidPlay(tempTile, board, position)) {
+            if (domino.isValidPlay(tempTile, board, position)) {
                 board.addFirst(tempTile);
                 return true;
             }
 
         if (position == LAST)
-            if (rules.isValidPlay(tempTile, board, position)) {
+            if (domino.isValidPlay(tempTile, board, position)) {
                 board.addLast(tempTile);
                 return true;
             }
@@ -176,23 +176,21 @@ public class Game {
         do {
             System.out.println("INCORRECT TILE...");
             correctTile = drawTile();
-            position = IO.putPosition();
+            position = Input.putPosition();
         } while (!isValidPlay(correctTile, position));
 
         return correctTile;
     }
 
     private boolean hasTilesToPlay() { //change name
-        Tile stealedTile;
 
-        while (!rules.hasPlayableTile(players[turn], board)) {
+        while (!domino.hasPlayableTile(players[turn], board)) {
             if (deck.isEmpty()) {
                 System.out.println("YOU CANT PLAY ANY TILE... AND DECK IS EMPTY!!! PASS...");
                 return false;
             }
-            stealedTile = deck.getDominoTile();
-            System.out.println(players[turn].getName() + " +" + 1 + " TILE " + players[turn].getName());
-            players[turn].addTile(stealedTile);
+            domino.stealTile(players[turn],deck); //conseguir que ficha es
+            System.out.println(players[turn].getName() + " +" + 1 + " TILE");
         }
         System.out.println(board);
         return true;

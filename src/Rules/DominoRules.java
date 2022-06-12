@@ -2,7 +2,7 @@ package Rules;
 
 import Game.*;
 
-public interface Rules {
+public interface DominoRules {
 
 
     void initTiles(DeckTiles deckTiles);
