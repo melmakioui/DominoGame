@@ -14,9 +14,9 @@ public class Output {
     public static void displayDominoModes(){
         System.out.println();
         System.out.println("SELECT DOMINO MODE");
-        System.out.println("1. SPANISH " +
-                        "\n 2. CHILEAN" +
-                        "\n 3. LATIN");
+        System.out.println("1. SPANISH  \n" +
+                        "2. CHILEAN \n" +
+                        "3. LATIN");
         System.out.print("> ");
     }
 
