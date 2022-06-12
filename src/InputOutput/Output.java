@@ -1,5 +1,11 @@
 package InputOutput;
 
+import Game.Player;
+import Rules.Chilean;
+import Rules.Domino;
+import Rules.DominoRules;
+import Rules.Latin;
+
 import java.security.PublicKey;
 import java.util.Scanner;
 
@@ -11,16 +17,16 @@ public class Output {
         System.out.print("> ");
     }
 
-    public static void displayDominoModes(){
+    public static void displayDominoModes() {
         System.out.println();
         System.out.println("SELECT DOMINO MODE");
         System.out.println("1. SPANISH  \n" +
-                        "2. CHILEAN \n" +
-                        "3. LATIN");
+                "2. CHILEAN \n" +
+                "3. LATIN");
         System.out.print("> ");
     }
 
-    public static void displayTeamsOption(){
+    public static void displayTeamsOption() {
         System.out.println();
         System.out.println("DO YOU WANT TO PLAY WITH TEAMS?" +
                 "\n" + "> 1. YES." +
@@ -28,13 +34,13 @@ public class Output {
         System.out.print("> ");
     }
 
-    public static void displayOutOfTiles(int length){
+    public static void displayOutOfTiles(int length) {
         System.out.println();
         System.out.println("PLEASE YOU HAVE " + (length + 1) + " TILES");
         System.out.print("> ");
     }
 
-    public static void displayPositionSelector(){
+    public static void displayPositionSelector() {
         System.out.println();
         System.out.println("WHERE DO YOU WANNA PUT THE TILE?");
         System.out.println(" --> 1.START" + "\n" +
@@ -42,4 +48,38 @@ public class Output {
         System.out.print("> ");
     }
 
+
+    //GAME
+
+    public static void displayDeckEmpty() {
+        System.out.println("YOU CANT PLAY ANY TILE... AND DECK IS EMPTY!!! PASS...");
+    }
+
+    public static void dislayIncorrectTile() {
+        System.out.println("INCORRECT TILE...");
+        System.out.println("TAKE THE CORRECT TILE!");
+    }
+
+    public static void displaySummary(Player... players) {
+        System.out.println("");
+        System.out.println("**************SUMMARY*************");
+        for (Player p : players) {
+            System.out.println(p);
+            System.out.println();
+            System.out.println("************************************");
+        }
+    }
+
+    public static void displayWinner(DominoRules dominoRules, Player player) {
+
+        if (dominoRules instanceof Domino)
+            System.out.println("YOU LOSE " + player.getName() + " YOU REACH THE MAX POINTS ");
+
+        if (dominoRules instanceof Chilean)
+            System.out.println("YOU WIN " + player.getName() + " YOU REACH THE MAX POINTS ");
+
+        if (dominoRules instanceof Latin)
+            System.out.println("YOU WIN " + " YOUR TEAM REACH THE MAX POINTS ");
+
+    }
 }

@@ -10,21 +10,11 @@ public class Player {
     private final String name;
     private Team team;
 
-/*
-    public Player(int numPlayer) {
-        this.hand = new ArrayList<>();
-        this.name = ("PLAYER " + numPlayer);
-        this.points = 0;
-    }
-*/
-
     public Player(int numPlayer, Team team) {
         this.hand = new ArrayList<>();
         this.name = ("Player " + numPlayer);
         this.team = team;
-
     }
-
 
     public Tile getTile(int idx) {
         return hand.get(idx);
@@ -70,6 +60,16 @@ public class Player {
         return hand.get(0).getSumTile();
     }
 
+    public int getTotalSumTiles(){
+
+        int total = 0;
+
+        for (Tile t: hand)
+            total += t.getSumTile();
+
+        return total;
+    }
+
     public List<Tile> getHand() {
         return this.hand;
     }
@@ -89,7 +89,7 @@ public class Player {
             counter++;
         }
 
-        return    "\n" + "YOUR TURN " + name + " " + pl + "\n" +
+        return    "\n" + name + " " + pl + "\n" +
                 team + " points";
     }
 }
