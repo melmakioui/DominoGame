@@ -7,7 +7,7 @@ import Game.Tile;
 
 public class Chilean extends Domino{
 
-    protected final int MAX_POINTS = 121;
+    private final int MAX_POINTS = 121;
 
     @Override
     public void initTiles(DeckTiles deckTiles) {
@@ -25,8 +25,8 @@ public class Chilean extends Domino{
     }
 
     @Override
-    public int startPlayer(Player... player) {
-        return super.startPlayer(player);
+    public Tile starterTile(Player... player) {
+        return super.starterTile(player);
     }
 
     @Override
@@ -50,8 +50,18 @@ public class Chilean extends Domino{
     }
 
     @Override
-    public void addPoints(Player player, Player... players) {
-        super.addPoints(player, players);
+    public int getWinnerOfDeadGame(Player... players) {
+        return super.getWinnerOfDeadGame(players);
+    }
+
+    @Override
+    public boolean isPointsGreaterThanPlayers(Player playerWinner, Player[] players) {
+        return super.isPointsGreaterThanPlayers(playerWinner, players);
+    }
+
+    @Override
+    public void addPoints(Player playerWinner, Player... players) {
+        super.addPoints(playerWinner, players);
     }
 
     @Override
@@ -63,4 +73,5 @@ public class Chilean extends Domino{
     public boolean isWinner(Player player) {
         return player.getPoints() > MAX_POINTS;
     }
+
 }

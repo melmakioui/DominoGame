@@ -39,7 +39,6 @@ public class Board {
         for (Tile tile: board ) {
             b += tile;
         }
-        return "\n" + "BOARD: \n" +
-                b;
+        return b;
     }
 }

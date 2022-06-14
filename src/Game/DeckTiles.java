@@ -40,6 +40,6 @@ public class DeckTiles {
     }
 
     public List<Tile> getDeckTiles() {
-        return deckTiles;
+        return Collections.unmodifiableList(this.deckTiles);
     }
 }
