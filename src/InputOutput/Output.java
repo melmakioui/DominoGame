@@ -51,7 +51,7 @@ public class Output {
 
     public static void displayDeckEmpty(Player player) {
         System.out.println();
-        System.out.println("YOU CANT PLAY ANY TILE... AND DECK IS EMPTY!!! PASS...");
+        System.out.println("YOU CANT PLAY ANY TILE " + player.getName() + " " + player.getTeamName() + "... AND DECK IS EMPTY!!! PASS...");
     }
 
     public static void dislayIncorrectTile() {
@@ -61,7 +61,7 @@ public class Output {
 
     public static void displaySummary(Player player, Player... players) {
         System.out.println("");
-        System.out.println("WINNER!!! --> " + player.getName());
+        System.out.println("FINISHED!!! --> " + player.getName() + " " + player.getTeamName());
         System.out.println("**************SUMMARY*************");
         for (Player p : players) {
             System.out.println(p);
@@ -72,15 +72,14 @@ public class Output {
 
     public static void displayWinner(DominoRules dominoRules, Player player) {
 
-        if (dominoRules instanceof Domino)
-            System.out.println("YOU WIN " + player.getName() + " WITH TEAM " +  player.getTeamName() +" YOU REACH THE MAX POINTS ");
-
-        if (dominoRules instanceof Chilean)
-            System.out.println("YOU LOSE " + player.getName() + " YOU REACH THE MAX POINTS ");
-
         if (dominoRules instanceof Latin)
             System.out.println("YOU WIN " + " YOUR TEAM REACH THE MAX POINTS ");
 
+        if (dominoRules instanceof Chilean)
+            System.out.println("YOU LOSE " + player.getName() + " WITH TEAM " + player.getTeamName() +  " YOU REACH THE MAX POINTS ");
+
+        if (dominoRules instanceof Domino)
+            System.out.println("YOU WIN " + player.getName() + " WITH TEAM " +  player.getTeamName() +" YOU REACH THE MAX POINTS ");
     }
 
     public static void displayWinnerDeadGame(Player player, DominoRules dominoRules){
@@ -88,7 +87,7 @@ public class Output {
         if (dominoRules instanceof Domino) {
             System.out.println("");
             System.out.println("***IS DEAD GAME!***");
-            System.out.println("YOU WIN THIS ROUND!! " + player.getName() + " YOU ARE THE ONE WITH FEWER POINTS!!");
+            System.out.println("YOU WIN THIS ROUND " + player.getName() + " " + player.getTeamName() + " YOU ARE THE ONE WITH FEWER POINTS!!");
         }
     }
 
@@ -104,6 +103,10 @@ public class Output {
 
     public static void displayAddedTile(Player player){
         System.out.println(player.getName() + " +" + 1 + " TILE");
+    }
+
+    public static void displayAddedPointsPasoCorrido(Player player){
+        System.out.println("PASO CORRIDO +25 POINTS " + player.getTeamName());
     }
 
 }
