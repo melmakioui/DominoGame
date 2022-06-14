@@ -109,7 +109,7 @@ public class Game {
 
             if (!hasTilesToPlay()) {
                 if (domino instanceof Latin)
-                    System.out.println("SUMA PUNTOS AL ANTERIOR"); //TODO SUMAR PUNTOS DEL ANTERIOR LATINO*/
+                    ((Latin) domino).addPointsPasoCorrido(players,turn);
                 continue;
             }
 
@@ -130,7 +130,7 @@ public class Game {
         if (isValidPlay(tempTile, position))
             players[turn].removeTile(tempTile);
         else tempTile = chooseCorrectTile();
-        players[turn].removeTile(tempTile);
+            players[turn].removeTile(tempTile);
     }
 
     private Tile drawTile() {
@@ -180,17 +180,12 @@ public class Game {
 
         while (!domino.hasPlayableTile(players[turn], board)) {
 
-            if (domino instanceof Chilean && !deck.isEmpty())
-                if (((Chilean) domino).isPassTurn(players[turn])) //TODO ES POSIBLE TENER QUE CAMBIAR EL METODO
-                    return false;
-
             if (deck.isEmpty()) {
                 Output.displayDeckEmpty(players[turn]);
                 return false;
             }
             domino.stealTile(players[turn], deck);
             Output.displayAddedTile(players[turn]);
-
         }
         return true;
     }

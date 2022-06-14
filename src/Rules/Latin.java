@@ -4,8 +4,12 @@ import Game.Board;
 import Game.DeckTiles;
 import Game.Player;
 import Game.Tile;
+import InputOutput.Output;
 
-public class Latin extends Domino{
+public class Latin extends Domino {
+
+    private final int MAX_POINTS = 200;
+    private final int POINTS_PASO_CORRIDO = 25;
 
     @Override
     public void initTiles(DeckTiles deckTiles) {
@@ -23,18 +27,18 @@ public class Latin extends Domino{
     }
 
     @Override
-    public int startPlayer(Player... player) {
-        return super.startPlayer(player);
+    public Tile starterTile(Player... player) {
+        return super.starterTile(player);
+    }
+
+    @Override
+    public int starterPlayer(Tile tile, Board board, Player... players) {
+        return super.starterPlayer(tile, board, players);
     }
 
     @Override
     public boolean hasPlayableTile(Player player, Board board) {
         return super.hasPlayableTile(player, board);
-    }
-
-    @Override
-    public boolean isPlayableTile(Tile tile, Board board) {
-        return super.isPlayableTile(tile, board);
     }
 
     @Override
@@ -48,8 +52,23 @@ public class Latin extends Domino{
     }
 
     @Override
-    public void addPoints(Player player, Player... players) {
-        super.addPoints(player, players);
+    public boolean isPlayableTile(Tile tile, Board board) {
+        return super.isPlayableTile(tile, board);
+    }
+
+    @Override
+    public int getWinnerOfDeadGame(Player... players) {
+        return super.getWinnerOfDeadGame(players);
+    }
+
+    @Override
+    public boolean isPointsGreaterThanPlayers(Player playerWinner, Player[] players) {
+        return super.isPointsGreaterThanPlayers(playerWinner, players);
+    }
+
+    @Override
+    public void addPoints(Player playerWinner, Player[] players) {
+        super.addPoints(playerWinner, players);
     }
 
     @Override
@@ -59,6 +78,17 @@ public class Latin extends Domino{
 
     @Override
     public boolean isWinner(Player player) {
-        return super.isWinner(player);
+        return player.getPoints() >= MAX_POINTS;
+    }
+
+    public void addPointsPasoCorrido(Player[] players, int turn) {
+
+        turn = turn - 1;
+
+        if (turn == -1) turn = players.length - 1;
+
+        players[turn].addPoints(POINTS_PASO_CORRIDO);
+        Output.displayAddedPointsPasoCorrido(players[turn]);
+
     }
 }

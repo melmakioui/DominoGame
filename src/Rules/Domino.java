@@ -179,9 +179,7 @@ public class Domino implements DominoRules {
                     playerWinner.addPoints(p.getPoints());
                     p.removePoints();
                 }
-        else return;
     }
-
 
     @Override
     public boolean isRoundWinner(Player player) {
