@@ -153,23 +153,33 @@ public class Domino implements DominoRules {
         return idx;
     }
 
-
     @Override
-    public void addPoints(Player player, Player... players) { //solo si es ganador
-
-        player.addPoints(POINTS);
-        int max = player.getPoints();
-        int counter = players.length - 1;
+    public boolean isPointsGreaterThanPlayers(Player playerWinner, Player[] players){
+        int winnerPoints = playerWinner.getPoints();
+        int counter = players.length -1;
 
         for (Player p : players)
-            if (player != p)
-                if (max > player.getPoints())
+            if (playerWinner != p) {
+                if (winnerPoints > playerWinner.getPoints())
                     counter--;
+            } else counter--;
 
-        if (counter == 0)
+        return counter == 0;
+    }
+
+
+    @Override
+    public void addPoints(Player playerWinner, Player[] players) {
+
+        playerWinner.addPoints(POINTS);
+
+        if (isPointsGreaterThanPlayers(playerWinner,players))
             for (Player p : players)
-                if (player != p)
-                    player.addPoints(p.getPoints());
+                if (playerWinner != p) {
+                    playerWinner.addPoints(p.getPoints());
+                    p.removePoints();
+                }
+        else return;
     }
 
 

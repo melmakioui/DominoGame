@@ -48,6 +48,10 @@ public class Player {
         this.team.addPoints(points);
     }
 
+    public void removePoints(){
+        this.team.removePoints();
+    }
+
     public int getPoints(){
         return this.team.getPoints();
     }
