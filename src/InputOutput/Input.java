@@ -55,14 +55,28 @@ public class Input {
     }
 
     public static int putPosition() {
-        Output.displayPositionSelector();
+        Output.displayPositionSelection();
         int pos = input.nextInt();
 
         while (pos < MIN_POSITION || pos > MAX_POSITION){
-            Output.displayPositionSelector();
+            Output.displayPositionSelection();
             pos = input.nextInt();
         }
         return pos;
+    }
+
+    public static int isPlayerPass(){
+        System.out.println();
+        System.out.println("YOU DONT HAVE TILES TO PLAY WITH... ");
+        System.out.println("PASS?");
+        System.out.println("1.YES " +  " 2.NO");
+        int pass = input.nextInt();
+
+        while (pass < 1 || pass > 2) {
+            pass = input.nextInt();
+        }
+
+        return pass;
     }
 
 
