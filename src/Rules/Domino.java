@@ -4,10 +4,11 @@ import Game.Board;
 import Game.DeckTiles;
 import Game.Player;
 import Game.Tile;
+import InputOutput.Output;
 
 public class Domino implements DominoRules {
 
-    protected final int MAX_POINTS = 12;
+    protected final int MAX_POINTS = 100;
     protected final int POINTS = 12;
     protected final int QUANTITY_TO_DEAL = 7;
 
@@ -35,19 +36,35 @@ public class Domino implements DominoRules {
     }
 
     @Override
-    public int startPlayer(Player... player) {
+    public Tile starterTile(Player... player) {
 
-        int max = 0;
-        int idx = 0;
+        Tile max = null;
+        int min = -1;
 
-        for (int i = 0; i < player.length; i++)
-            if (max < player[i].getMaxTile()) {
-                max = player[i].getMaxTile();
-                idx = i;
-            }
+        for (Player p : player)
+            for (Tile t : p.getHand())
+                if (t.getLeftNum() == t.getRightNum())
+                    if (min < t.getSumTile()) {
+                        max = t;
+                        min = t.getSumTile();
+                    }
 
-        return idx;
+        return max;
     }
+
+    @Override
+    public int starterPlayer(Tile tile, Board board, Player... players) {
+
+        for (int i = 0; i < players.length; i++)
+            if (players[i].containsTile(tile)) {
+                board.addLast(tile);
+                players[i].removeTile(tile);
+                Output.displayBoard(board);
+                return i;
+            }
+        return 0;
+    }
+
 
     @Override
     public boolean hasPlayableTile(Player player, Board board) {
@@ -81,6 +98,7 @@ public class Domino implements DominoRules {
                     tile.reverseTile();
                     return true;
                 }
+                break;
             case 2:
                 if (lastRightNumBoard == leftNumTile)
                     return true;
@@ -88,6 +106,7 @@ public class Domino implements DominoRules {
                     tile.reverseTile();
                     return true;
                 }
+                break;
         }
         return false;
     }
@@ -100,14 +119,10 @@ public class Domino implements DominoRules {
                 if (hasPlayableTile(p, board))
                     return false;
         } else
+
             for (Tile t : deckTiles.getDeckTiles())
                 if (isPlayableTile(t, board))
                     return false;
-/*
-        for (Player p : players)
-            if (hasPlayableTile(p, board))
-                return false;
-*/
 
         return true;
     }
@@ -125,13 +140,13 @@ public class Domino implements DominoRules {
     }
 
     @Override
-    public int getWinnerDeadGame (Player...players){
+    public int getWinnerOfDeadGame(Player... players) {
 
         int min = 0;
         int idx = 0;
 
         for (int i = 0; i < players.length; i++)
-            if (min < players[i].getTotalSumTiles()){
+            if (min < players[i].getTotalSumTiles()) {
                 min = players[i].getTotalSumTiles();
                 idx = i;
             }

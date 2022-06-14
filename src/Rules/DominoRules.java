@@ -11,7 +11,9 @@ public interface DominoRules {
 
     void stealTile(Player player, DeckTiles deckTiles);
 
-    int startPlayer(Player... player);
+    Tile starterTile(Player... player);
+
+    int starterPlayer(Tile tile, Board board, Player... players);
 
     boolean hasPlayableTile(Player player, Board board);
 
@@ -21,7 +23,7 @@ public interface DominoRules {
 
     boolean isPlayableTile(Tile tile, Board board);
 
-    int getWinnerDeadGame(Player... players);
+    int getWinnerOfDeadGame(Player... players);
 
     boolean isRoundWinner(Player player);
 
