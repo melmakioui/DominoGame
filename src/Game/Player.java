@@ -29,6 +29,7 @@ public class Player {
     public void addTile(Tile tile) {
         hand.add(tile);
         hand.sort(Tile::compareTo);
+        hand.sort(Collections.reverseOrder());
     }
 
     public void removeTile(Tile tile) {
@@ -47,17 +48,8 @@ public class Player {
         this.team.addPoints(points);
     }
 
-    public void removePoints() {
-        this.team.removePoints();
-    }
-
     public int getPoints(){
         return this.team.getPoints();
-    }
-
-    public int getMaxTile() {
-        hand.sort(Collections.reverseOrder());
-        return hand.get(0).getSumTile();
     }
 
     public int getTotalSumTiles(){
@@ -71,11 +63,19 @@ public class Player {
     }
 
     public List<Tile> getHand() {
-        return this.hand;
+        return Collections.unmodifiableList(this.hand);
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getTeamName(){
+        return team.getTeamName();
+    }
+
+    public boolean containsTile(Tile tile){
+       return hand.contains(tile);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class Player {
             counter++;
         }
 
-        return    "\n" + name + " " + pl + "\n" +
+        return    "\n" + name +  " with " + team.getTeamName() + " " + pl + "\n" +
                 team + " points";
     }
 }
