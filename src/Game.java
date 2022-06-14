@@ -40,12 +40,11 @@ public class Game {
         for (int n = 0; n < 2; n++) {
             team[n] = new Team(n + 1);
             players[n] = new Player(n + 1, team[n]);
-            players[n + 2] = new Player(n, team[n]);
+            players[n + 2] = new Player(n + 1, team[n]);
 
             team[n].addPlayer(players[n], players[n + 2]);
         }
     }
-
 
     private void initPlayers() {
         int numPlayers = Input.setQuantityPlayers();
@@ -72,6 +71,7 @@ public class Game {
     }
 
     public void initGame() {
+
         if (domino instanceof Latin) {
             initTeams();
         } else {
@@ -84,17 +84,14 @@ public class Game {
         do {
             startGameArea();
 
-            turn = domino.startPlayer(players);
-
-            Tile initialTile = players[turn].putTile(0);
-            board.addLast(initialTile);
-            System.out.println(board);
+            Tile startTile = domino.starterTile(players);
+            turn = domino.starterPlayer(startTile, board, players);
+            Output.displayStartedPlayer(players[turn]);
 
             playRound();
 
             domino.addPoints(players[turn]);
-            Output.displaySummary(players);
-
+            Output.displaySummary(players[turn], players);
         } while (!domino.isWinner(players[turn]));
 
         Output.displayWinner(domino, players[turn]);
@@ -102,46 +99,47 @@ public class Game {
 
     private void playRound() {
 
-        Tile tempTile;
-        int position;
-        System.out.println(players[turn].getName() + " STARTED!"); // OUTPUT
-
         do {
             changeTurn();
-            if (domino.isDeadGame(deck, board, players)){
-                turn = domino.getWinnerDeadGame(players);
-                Output.displayWinnerDeadGame(players[turn],domino);
+            if (domino.isDeadGame(deck, board, players)) {
+                turn = domino.getWinnerOfDeadGame(players);
+                Output.displayWinnerDeadGame(players[turn], domino);
                 break;
             }
 
             if (!hasTilesToPlay()) {
                 if (domino instanceof Latin)
-                    System.out.println("SUMA PUNTOS AL ANTERIOR");
-                changeTurn();
+                    System.out.println("SUMA PUNTOS AL ANTERIOR"); //TODO SUMAR PUNTOS DEL ANTERIOR LATINO*/
                 continue;
             }
 
             System.out.println(players[turn]);
-
-            tempTile = drawTile();
-            position = Input.putPosition();
-
-            if (isValidPlay(tempTile, position))
-                players[turn].removeTile(tempTile);
-            else tempTile = chooseCorrectTile();
-
-            players[turn].removeTile(tempTile);
+            placeTile();
             System.out.println(board);
         } while (!domino.isRoundWinner(players[turn]));
     }
 
+    private void placeTile() {
+
+        Tile tempTile;
+        int position;
+
+        tempTile = drawTile();
+        position = Input.putPosition();
+
+        if (isValidPlay(tempTile, position))
+            players[turn].removeTile(tempTile);
+        else tempTile = chooseCorrectTile();
+        players[turn].removeTile(tempTile);
+    }
+
     private Tile drawTile() {
 
-        int tiles = (players[turn].getHand().size() - 1);
+        int availableTiles = (players[turn].getHand().size() - 1);
         int selectedTile;
         Tile tempTile;
 
-        selectedTile = Input.selectTile(tiles);
+        selectedTile = Input.selectTile(availableTiles);
         tempTile = players[turn].getTile(selectedTile);
         return tempTile;
     }
@@ -181,12 +179,18 @@ public class Game {
     private boolean hasTilesToPlay() {
 
         while (!domino.hasPlayableTile(players[turn], board)) {
+
+            if (domino instanceof Chilean && !deck.isEmpty())
+                if (((Chilean) domino).isPassTurn(players[turn])) //TODO ES POSIBLE TENER QUE CAMBIAR EL METODO
+                    return false;
+
             if (deck.isEmpty()) {
-                Output.displayDeckEmpty();
+                Output.displayDeckEmpty(players[turn]);
                 return false;
             }
             domino.stealTile(players[turn], deck);
-            System.out.println(players[turn].getName() + " +" + 1 + " TILE");
+            Output.displayAddedTile(players[turn]);
+
         }
         return true;
     }
