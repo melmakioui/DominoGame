@@ -173,7 +173,7 @@ public class Domino implements DominoRules {
     @Override
     public void addPoints(Player playerWinner, Player[] players) {
         playerWinner.addPoints(POINTS);
-        //SI GANA EL JUGADOR SI TIENE MAS PUNTOS QUE LOS DEMAS SE LOS ROBA
+
         if (isPointsGreaterThanPlayers(playerWinner, players)) {
             for (Player p : players)
                 if (playerWinner != p) {
