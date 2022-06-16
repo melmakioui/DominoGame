@@ -73,7 +73,7 @@ public class Output {
     public static void displayWinner(DominoRules dominoRules, Player player) {
 
         if (dominoRules instanceof Latin){
-            System.out.println("YOU WIN " + player.getName() + " WITH THEAM " + player.getTeamName() + " YOUR TEAM REACH THE MAX POINTS ");
+            System.out.println("YOU LOSE " + player.getName() + " WITH THEAM " + player.getTeamName() + " YOUR TEAM REACH THE MAX POINTS ");
             return;
         }
 
@@ -97,8 +97,16 @@ public class Output {
         if (dominoRules instanceof Domino) {
             System.out.println("");
             System.out.println("***IS DEAD GAME!***");
+            System.out.println("YOU TAKE THE POINTS THIS ROUND " + player.getName() + " " + player.getTeamName() + " YOU ARE THE ONE WITH MORE POINTS!!");
+        }
+
+        if (dominoRules instanceof Domino) {
+            System.out.println("");
+            System.out.println("***IS DEAD GAME!***");
             System.out.println("YOU WIN THIS ROUND " + player.getName() + " " + player.getTeamName() + " YOU ARE THE ONE WITH FEWER POINTS!!");
         }
+
+
     }
 
     public static void displayBoard(Board board) {

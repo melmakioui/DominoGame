@@ -13,6 +13,7 @@ public class Game {
     private DominoRules domino;
     private DeckTiles deck;
     private static int turn = 0;
+    private static boolean isDeadGame = true;
 
     public Game() {
         this.board = new Board();
@@ -35,11 +36,11 @@ public class Game {
 
         this.team = new Team[2];
         this.players = new Player[4];
-        //TODO CORREGIR NUMERO DE JUGADORES DE CADA EQUIPO CORRESPONDIENTE
+
         for (int n = 0; n < 2; n++) {
             team[n] = new Team(n + 1);
             players[n] = new Player(n + 1, team[n]);
-            players[n + 2] = new Player(n + 2, team[n]);
+            players[n + 2] = new Player(n + 1, team[n]);
 
             team[n].addPlayer(players[n], players[n + 2]);
         }
@@ -88,9 +89,12 @@ public class Game {
             startGameArea();
             playRound();
 
+            if (!isDeadGame)
+                domino.addPointsDeadGame(players[turn],players);
+            else domino.addPoints(players[turn],players);
 
-            domino.addPoints(players[turn], players);
             Output.displaySummary(players[turn], players);
+            isDeadGame = true;
         } while (!domino.isPlayerReachPoints(players[turn]));
 
         Output.displayWinner(domino, players[turn]);
@@ -102,6 +106,7 @@ public class Game {
             changeTurn();
             if (domino.isDeadGame(deck, board, players)) {
                 turn = domino.getWinnerOfDeadGame(players);
+                isDeadGame = false;
                 Output.displayWinnerDeadGame(players[turn], domino);
                 break;
             }

@@ -153,11 +153,17 @@ public class Domino implements DominoRules {
                 min = players[i].getTotalSumTiles();
                 idx = i;
             }
+
+        addPointsDeadGame(players[idx],players);
         return idx;
     }
 
     @Override
-    public boolean isPointsGreaterThanPlayers(Player playerWinner, Player[] players) {
+    public void addPointsDeadGame(Player player, Player[] players) {
+        player.addPoints(POINTS);
+    }
+
+    private boolean isPointsGreaterThanPlayers(Player playerWinner, Player[] players) {
         int winnerPoints = playerWinner.getPoints();
         int counter = players.length;
 

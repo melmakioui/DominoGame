@@ -10,7 +10,7 @@
 4. Si el jugador no te fitxes per jugar, haura d'agafar una fitxa d'es pozo, si no en queden pasara de turn. 
 
 
- 4. Si cap jugador te una fitxa compatible amb ses fitxes des tauler, es procedira a tancar el joc, i la ronda el guanya el jugador que te menys punts en fitxes. I si les seus punts d'un jugador determinat es mes alt que els altres jugadors, robara els punts dels altres jugadors.
+ 4. Si cap jugador te una fitxa compatible amb ses fitxes en joc, es procedira a tancar el joc, i la ronda el guanyara el jugador que te menys punts en fitxes sumant els punts corresponents *(12)*.
 
 
  5. El jugador que arribi al maxim de punts sera el guanyador de la partida.
@@ -30,13 +30,13 @@
 3. Si el jugador no te fitxes per jugar haura d'agafar una fitxa d'es pozo. Si no en queden pasara de turn automaticament.
 
 
-4. Si cap jugador te una fitxa compatible amb ses fitxes des tauler i es pozo esta buit, es procedira a tancar el joc, i la ronda el guanya el jugador que te mes punts en fitxes i sumara els punts de les fitxes dels altres jugadors(no robar) i (nomes si es mes alt que els altres).
+4. Si cap jugador te una fitxa compatible amb ses fitxes des tauler i es pozo esta buit, es procedira a tancar el joc, i la ronda el guanya el jugador que te mes punts en fitxes i sumara els punts de les fitxes dels altres jugadors.
 
 
 5. El jugador que arribi al maxim de punts (121) sera el que perdra la partida i el guanyador sera el jugador amb menys punts.
 
 
-6. El jugador guanyador de la ronda sumara els punts corresponents.
+6. El jugador guanyador de la ronda sumara els punts corresponents (*12*).
 
 # LLATÍ.
 1. Nomes es pot jugar amb parelles de 2, amb 2 jugadors cada un.

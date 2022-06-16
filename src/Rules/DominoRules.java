@@ -19,7 +19,7 @@ public interface DominoRules {
 
     boolean isValidPlay(Tile tile, Board board, int pos);
 
-    boolean isPointsGreaterThanPlayers(Player winnePlayer, Player[] players);
+    void addPointsDeadGame (Player player, Player[] players);
 
     void addPoints(Player player, Player[] players);
 
