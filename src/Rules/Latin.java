@@ -8,8 +8,8 @@ import InputOutput.Output;
 
 public class Latin extends Domino {
 
-    private final int MAX_POINTS = 200;
-    private final int POINTS_PASO_CORRIDO = 25;
+    protected final int MAX_POINTS = 200;
+    private final int POINTS_PASO_CORRIDO = 8;
 
     @Override
     public void initTiles(DeckTiles deckTiles) {
@@ -57,7 +57,7 @@ public class Latin extends Domino {
     }
 
     @Override
-    public int getWinnerOfDeadGame(Player... players) {
+    public int getWinnerOfDeadGame(Player... players) { //LA PAREJA QUE TENGA MENOS PUNTOS SERA LA QUE SE SALVA DE SUMAR PUNTOS
         return super.getWinnerOfDeadGame(players);
     }
 
@@ -77,7 +77,7 @@ public class Latin extends Domino {
     }
 
     @Override
-    public boolean isWinner(Player player) {
+    public boolean isPlayerReachPoints(Player player) {
         return player.getPoints() >= MAX_POINTS;
     }
 

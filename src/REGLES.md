@@ -27,20 +27,20 @@
 2. Inicia el jugador que tengui el doble mes alt.
 
 
-3. Si el jugador no te fitxes per jugar haura d'agafar una fitxa d'es pozo si vol, i si no, pot passar. Si no en queden pasara de turn automaticament.
+3. Si el jugador no te fitxes per jugar haura d'agafar una fitxa d'es pozo. Si no en queden pasara de turn automaticament.
 
 
-4. Si cap jugador te una fitxa compatible amb ses fitxes des tauler, es procedira a tancar el joc, i la ronda el guanya el jugador que te mes punts en fitxes i sumara els punts de les fitxes dels altres jugadors.
+4. Si cap jugador te una fitxa compatible amb ses fitxes des tauler, es procedira a tancar el joc, i la ronda el guanya el jugador que te mes punts en fitxes i sumara els punts de les fitxes dels altres jugadors (nomes si es mes alt que els altres).
 
 
 5. El jugador que arribi al maxim de punts sera el que perdra la partida i el guanyador sera el jugador amb menys punts.
 
 
-6. El jugador guanyador de la ronda sumara els punts corresponents (PASO CORRIDO).
+6. El jugador guanyador de la ronda sumara els punts corresponents.
 
 
 # LLATÍ.
-1. Nomes es pot jugar amb parelles de 2, de 2 jugadors cada un.
+1. Nomes es pot jugar amb parelles de 2 amb 2 jugadors cada un.
 
 
 2. Inicia el jugador que tengui el doble mes alt.
@@ -49,10 +49,10 @@
 3. Si el jugador no te fitxes per jugar haura d'agafar una fitxa d'es pozo, Si no en queden pasara de turn automaticament.
 
 
-4. Si cap jugador te una fitxa compatible amb ses fitxes des tauler, es procedira a tancar el joc, i la ronda el guanya el jugador que te menys punts en fitxes. Nomes se li sumaran els punts a la parella que ha perdut.
+4. Si cap jugador te una fitxa compatible amb ses fitxes del tauler, es procedira a tancar el joc, i la ronda el guanya el jugador que te menys punts en fitxes. Nomes se li sumaran els punts a la parella que ha perdut.
 
 
 5. La primera parella en arribar als 200 punts sera el que pedra.
 
 
-6. Si un jugador llança una fitxa i el següent no te per tirar, es procedira a sumar x punts al jugador anterior.
+6. Si un jugador llança una fitxa i el següent no te per tirar, es procedira a sumar **X** punts al jugador anterior (PASO CORRIDO).

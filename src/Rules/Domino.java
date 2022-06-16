@@ -189,12 +189,11 @@ public class Domino implements DominoRules {
 
     @Override
     public boolean isRoundWinner(Player player) {
-        return player.isHandEmpty();
+        return !player.isHandEmpty();
     }
 
     @Override
-    public boolean isWinner(Player player) { //Rule
+    public boolean isPlayerReachPoints(Player player) { //Rule
         return player.getPoints() >= MAX_POINTS;
     }
-
 }

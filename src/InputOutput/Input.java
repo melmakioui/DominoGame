@@ -1,5 +1,8 @@
 package InputOutput;
 
+import Game.Player;
+
+import java.lang.management.PlatformLoggingMXBean;
 import java.util.Scanner;
 
 public class Input {
@@ -64,8 +67,5 @@ public class Input {
         }
         return pos;
     }
-
-
-
 
 }

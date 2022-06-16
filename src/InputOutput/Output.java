@@ -73,7 +73,7 @@ public class Output {
     public static void displayWinner(DominoRules dominoRules, Player player) {
 
         if (dominoRules instanceof Latin){
-            System.out.println("YOU WIN " + " YOUR TEAM REACH THE MAX POINTS ");
+            System.out.println("YOU WIN " + player.getName() + " WITH THEAM " + player.getTeamName() + " YOUR TEAM REACH THE MAX POINTS ");
             return;
         }
 

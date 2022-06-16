@@ -7,7 +7,7 @@ import Game.Tile;
 
 public class Chilean extends Domino{
 
-    protected final int MAX_POINTS = 121;
+    protected final int MAX_POINTS = 12;
 
     @Override
     public void initTiles(DeckTiles deckTiles) {
@@ -80,11 +80,9 @@ public class Chilean extends Domino{
     }
 
     @Override
-    public boolean isWinner(Player player) {
+    public boolean isPlayerReachPoints(Player player) {
         return player.getPoints() >= MAX_POINTS;
     }
 
-    public boolean isPlayerPass(Player player) {
 
-    }
 }

@@ -29,9 +29,9 @@ public interface DominoRules {
 
     int getWinnerOfDeadGame(Player... players);
 
-    boolean isRoundWinner(Player player);
+    boolean  isRoundWinner(Player player);
 
-    boolean isWinner(Player player);
+    boolean isPlayerReachPoints(Player player);
 
     boolean isDeadGame(DeckTiles deckTiles, Board board, Player... players);
 

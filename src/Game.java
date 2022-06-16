@@ -15,7 +15,6 @@ public class Game {
     private static int turn = 0;
     boolean deadGame = false;
 
-    //TODO SINGLE RESPONSABILITY INICIALIZACION...
     public Game() {
         this.board = new Board();
         this.deck = new DeckTiles();
@@ -94,7 +93,7 @@ public class Game {
                 domino.addPoints(players[turn]);
             deadGame = false;
             Output.displaySummary(players[turn], players);
-        } while (!domino.isWinner(players[turn]));
+        } while (!domino.isPlayerReachPoints(players[turn]));
 
         Output.displayWinner(domino, players[turn]);
     }
@@ -119,7 +118,7 @@ public class Game {
             System.out.println(players[turn]);
             placeTile();
             System.out.println(board);
-        } while (!domino.isRoundWinner(players[turn]));
+        } while (domino.isRoundWinner(players[turn]));
     }
 
     private void placeTile() {
@@ -187,7 +186,7 @@ public class Game {
                 Output.displayDeckEmpty(players[turn]);
                 return false;
             }
-            
+
             domino.stealTile(players[turn], deck);
             Output.displayAddedTile(players[turn]);
         }
