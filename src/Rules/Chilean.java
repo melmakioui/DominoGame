@@ -59,24 +59,22 @@ public class Chilean extends Domino{
                 max = players[i].getPoints();
                 idx = i;
             }
-
-        addPointsDeadGame(players[idx],players);
         return idx;
     }
 
-
+    @Override
     public boolean isPointsGreaterThanPlayers(Player playerWinner, Player[] players) {
         return super.isPointsGreaterThanPlayers(playerWinner, players);
     }
 
     @Override
-    public void addPointsDeadGame(Player playerWinner, Player[] players) {
-        super.addPointsDeadGame(playerWinner, players);
+    public void addPoints(Player playerWinner, Player[] players) {
+        super.addPoints(playerWinner, players);
     }
 
     @Override
-    public boolean isRoundWinner(Player player) {
-        return super.isRoundWinner(player);
+    public boolean isRoundFinished(Player player) {
+        return super.isRoundFinished(player);
     }
 
     @Override

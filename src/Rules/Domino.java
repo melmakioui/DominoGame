@@ -156,7 +156,7 @@ public class Domino implements DominoRules {
         return idx;
     }
 
-
+    @Override
     public boolean isPointsGreaterThanPlayers(Player playerWinner, Player[] players) {
         int winnerPoints = playerWinner.getPoints();
         int counter = players.length;
@@ -171,24 +171,20 @@ public class Domino implements DominoRules {
     }
 
     @Override
-    public void addPointsDeadGame(Player playerWinner, Player[] players) {
-
-        if (isPointsGreaterThanPlayers(playerWinner, players)){
+    public void addPoints(Player playerWinner, Player[] players) {
+        playerWinner.addPoints(POINTS);
+        //SI GANA EL JUGADOR SI TIENE MAS PUNTOS QUE LOS DEMAS SE LOS ROBA
+        if (isPointsGreaterThanPlayers(playerWinner, players)) {
             for (Player p : players)
                 if (playerWinner != p) {
                     playerWinner.addPoints(p.getPoints());
                     p.removePoints();
                 }
-        }else playerWinner.addPoints(POINTS);
-
-    }
-
-    public void addPoints(Player playerWinner){
-        playerWinner.addPoints(POINTS);
+        }
     }
 
     @Override
-    public boolean isRoundWinner(Player player) {
+    public boolean isRoundFinished(Player player) {
         return !player.isHandEmpty();
     }
 

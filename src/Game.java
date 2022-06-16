@@ -13,7 +13,6 @@ public class Game {
     private DominoRules domino;
     private DeckTiles deck;
     private static int turn = 0;
-    boolean deadGame = false;
 
     public Game() {
         this.board = new Board();
@@ -89,9 +88,8 @@ public class Game {
             startGameArea();
             playRound();
 
-            if (!deadGame)
-                domino.addPoints(players[turn]);
-            deadGame = false;
+
+            domino.addPoints(players[turn], players);
             Output.displaySummary(players[turn], players);
         } while (!domino.isPlayerReachPoints(players[turn]));
 
@@ -104,7 +102,6 @@ public class Game {
             changeTurn();
             if (domino.isDeadGame(deck, board, players)) {
                 turn = domino.getWinnerOfDeadGame(players);
-                deadGame = true;
                 Output.displayWinnerDeadGame(players[turn], domino);
                 break;
             }
@@ -118,7 +115,7 @@ public class Game {
             System.out.println(players[turn]);
             placeTile();
             System.out.println(board);
-        } while (domino.isRoundWinner(players[turn]));
+        } while (domino.isRoundFinished(players[turn]));
     }
 
     private void placeTile() {
@@ -132,7 +129,7 @@ public class Game {
         if (isValidPlay(tempTile, position))
             players[turn].removeTile(tempTile);
         else tempTile = chooseCorrectTile();
-            players[turn].removeTile(tempTile);
+        players[turn].removeTile(tempTile);
     }
 
     private Tile grabTileFromPlayer() {

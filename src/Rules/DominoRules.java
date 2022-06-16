@@ -21,15 +21,13 @@ public interface DominoRules {
 
     boolean isPointsGreaterThanPlayers(Player winnePlayer, Player[] players);
 
-    void addPointsDeadGame(Player player, Player... players);
-
-    void addPoints(Player player);
+    void addPoints(Player player, Player[] players);
 
     boolean isPlayableTile(Tile tile, Board board);
 
     int getWinnerOfDeadGame(Player... players);
 
-    boolean  isRoundWinner(Player player);
+    boolean isRoundFinished(Player player);
 
     boolean isPlayerReachPoints(Player player);
 

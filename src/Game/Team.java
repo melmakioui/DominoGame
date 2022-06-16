@@ -18,11 +18,11 @@ public class Team {
         this.points = 0;
     }
 
-    public void addPlayer(Player...players){
+    public void addPlayer(Player... players) {
         teamPlayers.addAll(Arrays.asList(players));
     }
 
-    public void addPoints(int points){
+    public void addPoints(int points) {
         this.points += points;
     }
 
@@ -30,11 +30,11 @@ public class Team {
         this.points = 0;
     }
 
-    public int getPoints (){
+    public int getPoints() {
         return points;
     }
 
-    public List<Player> getTeamPlayers(){
+    public List<Player> getTeamPlayers() {
         return teamPlayers;
     }
 
@@ -42,8 +42,18 @@ public class Team {
         return teamName;
     }
 
+    public int getTotalSumTilesTeam() {
+
+        int total = 0;
+
+        for (Player p : teamPlayers)
+            total += p.getTotalSumTiles();
+
+        return total;
+    }
+
     @Override
     public String toString() {
-        return teamName  + " has --> " + points;
+        return teamName + " has --> " + points;
     }
 }

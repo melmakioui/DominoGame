@@ -49,7 +49,7 @@
 3. Si el jugador no te fitxes per jugar haura d'agafar una fitxa d'es pozo, Si no en queden pasara de turn automaticament.
 
 
-4. Si cap jugador te una fitxa compatible amb ses fitxes del tauler, es procedira a tancar el joc, i la ronda el guanya el jugador que te menys punts en fitxes. Nomes se li sumaran els punts a la parella que ha perdut.
+4. Si cap jugador te una fitxa compatible amb ses fitxes del tauler, es procedira a tancar el joc, i la ronda el guanya l'equip que te menys punts en fitxes. Nomes se li sumaran els punts a la parella que te mes punts.
 
 
 5. La primera parella en arribar als 200 punts sera el que pedra.

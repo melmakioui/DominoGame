@@ -47,7 +47,7 @@ public class Latin extends Domino {
     }
 
     @Override
-    public boolean isDeadGame(DeckTiles deckTiles, Board board, Player... players) {
+    public boolean isDeadGame(DeckTiles deckTiles, Board board, Player[] players) {
         return super.isDeadGame(deckTiles, board, players);
     }
 
@@ -57,8 +57,18 @@ public class Latin extends Domino {
     }
 
     @Override
-    public int getWinnerOfDeadGame(Player... players) { //LA PAREJA QUE TENGA MENOS PUNTOS SERA LA QUE SE SALVA DE SUMAR PUNTOS
-        return super.getWinnerOfDeadGame(players);
+    public int getWinnerOfDeadGame(Player[] players) {
+
+        int teamOneTotalSumTiles = players[0].getTotalSumTilesTeam();
+        int teamTwoTotalSumTiles = players[1].getTotalSumTilesTeam();
+
+        if(players[0].getPoints() == 0 || players[1].getPoints() == 0) {
+            if (teamOneTotalSumTiles > teamTwoTotalSumTiles)
+                return 0;
+            else return 1;
+        }
+
+        return 1;
     }
 
     @Override
@@ -67,13 +77,20 @@ public class Latin extends Domino {
     }
 
     @Override
-    public void addPointsDeadGame(Player playerWinner, Player[] players) {
-        super.addPointsDeadGame(playerWinner, players);
+    public void addPoints(Player playerWinner, Player[] players) {
+
+        int points = 0;
+
+        for (Player p: players)
+            if (!playerWinner.getTeamName().equals(p.getTeamName())) //mirar de cambiar esto
+                points += p.getTotalSumTiles();
+
+        playerWinner.addPoints(points);
     }
 
     @Override
-    public boolean isRoundWinner(Player player) {
-        return super.isRoundWinner(player);
+    public boolean isRoundFinished(Player player) {
+        return super.isRoundFinished(player);
     }
 
     @Override

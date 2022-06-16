@@ -60,6 +60,10 @@ public class Player {
         return total;
     }
 
+    public int getTotalSumTilesTeam(){
+        return team.getTotalSumTilesTeam();
+    }
+
     public List<Tile> getHand() {
         return Collections.unmodifiableList(this.hand);
     }
