@@ -42,6 +42,10 @@ public class Team {
         return teamName;
     }
 
+    public int getNumTeam() {
+        return numTeam;
+    }
+
     public int getTotalSumTilesTeam() {
 
         int total = 0;

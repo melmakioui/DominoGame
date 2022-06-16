@@ -1,4 +1,4 @@
-# DOMINO.
+# DOMINO
 
 # DOMINO (ESPANYOL).
 1. Es pot jugar individual MAX 4 jugadors o en parelles de 2.

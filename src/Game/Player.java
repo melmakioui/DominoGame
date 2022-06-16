@@ -84,6 +84,10 @@ public class Player {
         return hand.size() -1;
     }
 
+    public int getNumTeam(){
+        return team.getNumTeam();
+    }
+
     @Override
     public String toString() {
 

@@ -28,7 +28,7 @@ public class Latin extends Domino {
         int points = 0;
 
         for (Player p: players)
-            if (!playerWinner.getTeamName().equals(p.getTeamName()))
+            if (playerWinner.getNumTeam() != p.getNumTeam())
                 points += p.getTotalSumTiles();
 
         playerWinner.addPoints(points);
