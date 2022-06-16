@@ -7,7 +7,7 @@ import Game.Tile;
 
 public class Chilean extends Domino{
 
-    private final int MAX_POINTS = 121;
+    protected final int MAX_POINTS = 121;
 
     @Override
     public void initTiles(DeckTiles deckTiles) {
@@ -15,8 +15,8 @@ public class Chilean extends Domino{
     }
 
     @Override
-    public void drawTileFromDeck(DeckTiles deckTiles, Player... players) {
-        super.drawTileFromDeck(deckTiles, players);
+    public void grabTileFromDeck(DeckTiles deckTiles, Player[] players) {
+        super.grabTileFromDeck(deckTiles, players);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class Chilean extends Domino{
     }
 
     @Override
-    public Tile starterTile(Player... player) {
+    public Tile starterTile(Player[] player) {
         return super.starterTile(player);
     }
 
@@ -45,23 +45,33 @@ public class Chilean extends Domino{
     }
 
     @Override
-    public boolean isDeadGame(DeckTiles deckTiles, Board board, Player... players) {
+    public boolean isDeadGame(DeckTiles deckTiles, Board board, Player[] players) {
         return super.isDeadGame(deckTiles, board, players);
     }
 
     @Override
-    public int getWinnerOfDeadGame(Player... players) {
-        return super.getWinnerOfDeadGame(players);
+    public int getWinnerOfDeadGame(Player[] players) {
+        int max = -1;
+        int idx = 0;
+
+        for (int i = 0; i < players.length; i++)
+            if (max < players[i].getPoints()) {
+                max = players[i].getPoints();
+                idx = i;
+            }
+
+        addPointsDeadGame(players[idx],players);
+        return idx;
     }
 
-    @Override
+
     public boolean isPointsGreaterThanPlayers(Player playerWinner, Player[] players) {
         return super.isPointsGreaterThanPlayers(playerWinner, players);
     }
 
     @Override
-    public void addPoints(Player playerWinner, Player... players) {
-        super.addPoints(playerWinner, players);
+    public void addPointsDeadGame(Player playerWinner, Player[] players) {
+        super.addPointsDeadGame(playerWinner, players);
     }
 
     @Override
@@ -71,7 +81,10 @@ public class Chilean extends Domino{
 
     @Override
     public boolean isWinner(Player player) {
-        return player.getPoints() > MAX_POINTS;
+        return player.getPoints() >= MAX_POINTS;
     }
 
+    public boolean isPlayerPass(Player player) {
+
+    }
 }

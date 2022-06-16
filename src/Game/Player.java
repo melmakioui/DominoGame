@@ -20,12 +20,6 @@ public class Player {
         return hand.get(idx);
     }
 
-    public Tile putTile(int idx) {
-        Tile tile = hand.get(idx);
-        hand.remove(idx);
-        return tile;
-    }
-
     public void addTile(Tile tile) {
         hand.add(tile);
         hand.sort(Tile::compareTo);
@@ -80,6 +74,10 @@ public class Player {
 
     public boolean containsTile(Tile tile){
        return hand.contains(tile);
+    }
+
+    public int getNumTiles() {
+        return hand.size() -1;
     }
 
     @Override

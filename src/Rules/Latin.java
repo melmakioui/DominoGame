@@ -17,8 +17,8 @@ public class Latin extends Domino {
     }
 
     @Override
-    public void drawTileFromDeck(DeckTiles deckTiles, Player... players) {
-        super.drawTileFromDeck(deckTiles, players);
+    public void grabTileFromDeck(DeckTiles deckTiles, Player... players) {
+        super.grabTileFromDeck(deckTiles, players);
     }
 
     @Override
@@ -67,8 +67,8 @@ public class Latin extends Domino {
     }
 
     @Override
-    public void addPoints(Player playerWinner, Player[] players) {
-        super.addPoints(playerWinner, players);
+    public void addPointsDeadGame(Player playerWinner, Player[] players) {
+        super.addPointsDeadGame(playerWinner, players);
     }
 
     @Override

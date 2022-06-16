@@ -7,7 +7,7 @@ public interface DominoRules {
 
     void initTiles(DeckTiles deckTiles);
 
-    void drawTileFromDeck(DeckTiles deckTiles, Player... players);
+    void grabTileFromDeck(DeckTiles deckTiles, Player... players);
 
     void stealTile(Player player, DeckTiles deckTiles);
 
@@ -21,7 +21,9 @@ public interface DominoRules {
 
     boolean isPointsGreaterThanPlayers(Player winnePlayer, Player[] players);
 
-    void addPoints(Player player, Player... players);
+    void addPointsDeadGame(Player player, Player... players);
+
+    void addPoints(Player player);
 
     boolean isPlayableTile(Tile tile, Board board);
 

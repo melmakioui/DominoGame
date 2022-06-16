@@ -20,7 +20,7 @@ public class Domino implements DominoRules {
     }
 
     @Override
-    public void drawTileFromDeck(DeckTiles deckTiles, Player... players) {
+    public void grabTileFromDeck(DeckTiles deckTiles, Player[] players) {
 
         deckTiles.shuffleDeck();
 
@@ -36,7 +36,7 @@ public class Domino implements DominoRules {
     }
 
     @Override
-    public Tile starterTile(Player... player) {
+    public Tile starterTile(Player[] player) {
 
         Tile max = null;
         int min = -1;
@@ -53,7 +53,7 @@ public class Domino implements DominoRules {
     }
 
     @Override
-    public int starterPlayer(Tile tile, Board board, Player... players) {
+    public int starterPlayer(Tile tile, Board board, Player[] players) {
 
         for (int i = 0; i < players.length; i++)
             if (players[i].containsTile(tile)) {
@@ -83,7 +83,7 @@ public class Domino implements DominoRules {
 
 
     @Override
-    public boolean isValidPlay(Tile tile, Board board, int position) { //Rule --> LEFT | RIGHT
+    public boolean isValidPlay(Tile tile, Board board, int position) {
 
         int firstLeftNumBoard = board.getFirst().getLeftNum();
         int lastRightNumBoard = board.getLast().getRightNum();
@@ -112,17 +112,20 @@ public class Domino implements DominoRules {
     }
 
     @Override
-    public boolean isDeadGame(DeckTiles deckTiles, Board board, Player... players) {
+    public boolean isDeadGame(DeckTiles deckTiles, Board board, Player[] players) {
 
         if (deckTiles.isEmpty()) {
             for (Player p : players)
                 if (hasPlayableTile(p, board))
                     return false;
         } else
-
             for (Tile t : deckTiles.getDeckTiles())
                 if (isPlayableTile(t, board))
                     return false;
+
+        for (Player p : players)
+            if (hasPlayableTile(p, board))
+                return false;
 
         return true;
     }
@@ -140,45 +143,48 @@ public class Domino implements DominoRules {
     }
 
     @Override
-    public int getWinnerOfDeadGame(Player... players) {
+    public int getWinnerOfDeadGame(Player[] players) {
 
-        int min = 0;
+        int min = Integer.MAX_VALUE;
         int idx = 0;
 
         for (int i = 0; i < players.length; i++)
-            if (min < players[i].getTotalSumTiles()) {
+            if (min > players[i].getTotalSumTiles()) {
                 min = players[i].getTotalSumTiles();
                 idx = i;
             }
         return idx;
     }
 
-    @Override
-    public boolean isPointsGreaterThanPlayers(Player playerWinner, Player[] players){
+
+    public boolean isPointsGreaterThanPlayers(Player playerWinner, Player[] players) {
         int winnerPoints = playerWinner.getPoints();
-        int counter = players.length -1;
+        int counter = players.length;
 
         for (Player p : players)
             if (playerWinner != p) {
-                if (winnerPoints > playerWinner.getPoints())
+                if (winnerPoints > p.getPoints())
                     counter--;
             } else counter--;
 
         return counter == 0;
     }
 
-
     @Override
-    public void addPoints(Player playerWinner, Player[] players) {
+    public void addPointsDeadGame(Player playerWinner, Player[] players) {
 
-        playerWinner.addPoints(POINTS);
-
-        if (isPointsGreaterThanPlayers(playerWinner,players))
+        if (isPointsGreaterThanPlayers(playerWinner, players)){
             for (Player p : players)
                 if (playerWinner != p) {
                     playerWinner.addPoints(p.getPoints());
                     p.removePoints();
                 }
+        }else playerWinner.addPoints(POINTS);
+
+    }
+
+    public void addPoints(Player playerWinner){
+        playerWinner.addPoints(POINTS);
     }
 
     @Override
